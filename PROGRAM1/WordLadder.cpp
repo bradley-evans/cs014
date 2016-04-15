@@ -15,11 +15,12 @@ WordLadder::WordLadder(const string &file) {
             }
             dict.push_back(word.c_str());
         }
+        infile.close();
+        return;
     } else {
         cout << "Error opening input file" << endl;
         return;
     }
-    infile.close();
 }
 
 void WordLadder::outputLadder(const string &start, const string &end, const string &outputFile) {
@@ -46,9 +47,11 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     }
     if (!endgood || !startgood) {
         ofstream outfile;
-        outfile.open(outputFile.c_str());
-        outfile << "Error. Start or end words are not in the dictionary.";
-        outfile.close();
+        if (outfile.is_open()) {
+            outfile.open(outputFile.c_str);
+            outfile << "Error. Start or end words are not in the dictionary.";
+            outfile.close();
+        }
         return;
     }          
     
@@ -85,8 +88,10 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     // if a word ladder is not found, then do this
     ofstream outfile;
     outfile.open(outputFile.c_str());
-    outfile << "No Word Ladder Found!!";
-    
+    if (outfile.is_open()) {
+        outfile << "No Word Ladder Found!!";
+        outfile.close();
+    }
 }
 
 bool WordLadder::vectorcontains(vector<string> vec, string word) {
@@ -130,11 +135,11 @@ void WordLadder::printstack(stack<string> stack, string outputFile) {
             if (!stack.empty()) {
                 outfile << " ";
             }
+        outfile.close();
         }
     } else {
         cout << "Error opening output file" << endl;
         return;
     }
-    outfile.close();
     //cout << endl;
 }
