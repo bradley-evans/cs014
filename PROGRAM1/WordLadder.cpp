@@ -104,5 +104,6 @@ void WordLadder::printstack(stack<string> stack, string outputFile) {
             outfile << " ";
         }
     }
+    outfile.close();
     //cout << endl;
 }
