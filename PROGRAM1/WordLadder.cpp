@@ -1,5 +1,6 @@
-#include "WordLadder.h"
 
+
+#include "WordLadder.h"
 
 WordLadder::WordLadder(const string &file) {
     string word;
@@ -16,17 +17,30 @@ WordLadder::WordLadder(const string &file) {
 
 void WordLadder::outputLadder(const string &start, const string &end, const string &outputFile) {
     
-
-    
     // set up the stuff
     queue< stack<string> > queue;
     stack< string > stack, tempstack;
     vector<string> nextwords,used;
     unsigned i;
     string word;
+    bool startgood = false;
+    bool endgood = false;
     
     stack.push(start);
     queue.push(stack);
+    
+    // are the start and end words in the dictionary?
+    for (list<string>::iterator it=dict.begin();it!=dict.end();++it) {
+        if (*it == start) {
+            startgood = true;
+        } else if (*it == end) {
+            endgood = true;
+        }
+    }
+    if (!endgood || !startgood) {
+        cout << "Error. Start or end words are not in the dictionary." << endl;
+        return;
+    }          
     
     // find the first word, delete it
     dict.remove(start);
@@ -58,6 +72,11 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         nextwords.clear();
         queue.pop();
     }
+    // if a word ladder is not found, then do this
+    ofstream outfile;
+    outfile.open(outputFile.c_str());
+    outfile << "No Word Ladder Found!!";
+    
 }
 
 bool WordLadder::vectorcontains(vector<string> vec, string word) {

@@ -1,4 +1,4 @@
 dictionary.txt
-heard
+hears
 heart
 output.txt
