@@ -10,13 +10,13 @@ WordLadder::WordLadder(const string &file) {
         while (!infile.eof()) {
             getline(infile,word);
             if (word.length() != 5) {
-                cout << "Word not exactly five characters detected!";
+                cout << "Word not exactly five characters detected!" << endl;
                 return;
             }
             dict.push_back(word.c_str());
         }
     } else {
-        cout << "Error opening input file";
+        cout << "Error opening input file" << endl;
         return;
     }
     infile.close();
@@ -45,7 +45,10 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         }
     }
     if (!endgood || !startgood) {
-        cout << "Error. Start or end words are not in the dictionary." << endl;
+        ofstream outfile;
+        outfile.open(outputFile.c_str());
+        outfile << "Error. Start or end words are not in the dictionary.";
+        outfile.close();
         return;
     }          
     
@@ -129,7 +132,7 @@ void WordLadder::printstack(stack<string> stack, string outputFile) {
             }
         }
     } else {
-        cout << "Error opening output file";
+        cout << "Error opening output file" << endl;
         return;
     }
     outfile.close();
