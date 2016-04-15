@@ -122,11 +122,9 @@ void WordLadder::printstack(stack<string> stack, string outputFile) {
     outfile.open(outputFile.c_str());
     if (outfile.is_open()) {
         while (!stack.empty()) {
-            cout << stack.top();
             outfile << stack.top();
             stack.pop();
             if (!stack.empty()) {
-                cout << " ";
                 outfile << " ";
             }
         }
