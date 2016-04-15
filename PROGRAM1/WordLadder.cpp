@@ -48,7 +48,7 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     if (!endgood || !startgood) {
         ofstream outfile;
         if (outfile.is_open()) {
-            outfile.open(outputFile.c_str);
+            outfile.open(outputFile.c_str());
             outfile << "Error. Start or end words are not in the dictionary.";
             outfile.close();
         }
