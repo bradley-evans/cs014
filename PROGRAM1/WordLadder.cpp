@@ -9,8 +9,15 @@ WordLadder::WordLadder(const string &file) {
     if (infile.is_open()) {
         while (!infile.eof()) {
             getline(infile,word);
+            if (word.length() > 5) {
+                cout << "Word longer than five characters detected!";
+                return;
+            }
             dict.push_back(word.c_str());
         }
+    } else {
+        cout << "Error opening input file";
+        return;
     }
     infile.close();
 }
@@ -113,15 +120,19 @@ void WordLadder::findnext(vector<string> &nextwords, vector<string> &used, strin
 void WordLadder::printstack(stack<string> stack, string outputFile) {
     ofstream outfile;
     outfile.open(outputFile.c_str());
-    
-    while (!stack.empty()) {
-        cout << stack.top();
-        outfile << stack.top();
-        stack.pop();
-        if (!stack.empty()) {
-            cout << " ";
-            outfile << " ";
+    if (outfile.is_open()) {
+        while (!stack.empty()) {
+            cout << stack.top();
+            outfile << stack.top();
+            stack.pop();
+            if (!stack.empty()) {
+                cout << " ";
+                outfile << " ";
+            }
         }
+    } else {
+        cout << "Error opening output file";
+        return;
     }
     outfile.close();
     //cout << endl;
