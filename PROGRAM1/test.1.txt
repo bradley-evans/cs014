@@ -1,4 +1,4 @@
 dictionary.txt
+output.txt
 wince
 heart
-output.txt

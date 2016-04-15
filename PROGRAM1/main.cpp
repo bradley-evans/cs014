@@ -1,31 +1,43 @@
-#include <iostream>
-#include <string>
-
 #include "WordLadder.h"
 
-using namespace std;
+#include <iostream>
 
-
+using std::cin;
+using std::cout;
+using std::string;
+using std::endl;
 
 int main() {
-    
-    string filename,leadword,endword,output; // defines a word dictionary
-    //cout << "Select dictionary file: "; 
-    cin >> filename;
-    WordLadder wordladder(filename); // create a word ladder
-    
-    //cout << "First word: ";
-    cin >> leadword;
-    //cout << endl;
-    //cout << "Second word: ";
-    cin >> endword;
-    //cout << endl;
-    //cout << "Output file: ";
-    cin >> output;
-    wordladder.outputLadder(leadword,endword,output);
-    //cout << endl;
-    
-    //wordladder.outputLadder()
-    
-    //cout << "Successful end." << endl;
+   string dictFile, wordBegin, wordEnd, outFile;
+   cout << "Enter the name of the dictionary file: ";
+   cin >> dictFile;
+   cout << endl;
+   cout << "Enter the name of the output file: ";
+   cin >> outFile;
+   cout << endl;
+   cout << "Enter the first word: ";
+   cin >> wordBegin;
+   cout << endl;
+   while (wordBegin.size() != 5) {
+      cout << "Word must have exactly 5 characters." << endl
+         << "Please reenter the first word: ";
+      cin >> wordBegin;
+      cout << endl;
+   }
+   cout << "Enter the last word: ";
+   cin >> wordEnd;
+   cout << endl;
+   while (wordEnd.size() != 5) {
+      cout << "Word must have exactly 5 characters." << endl
+         << "Please reenter the last word: ";
+      cin >> wordEnd;
+      cout << endl;
+   }
+   
+	WordLadder wl(dictFile);
+	
+	wl.outputLadder(wordBegin, wordEnd, outFile);
+
+   return 0;
 }
+

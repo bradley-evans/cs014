@@ -1,4 +1,4 @@
 dictionary.txt
+output.txt
 hears
 heart
-output.txt
