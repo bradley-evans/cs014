@@ -1,0 +1,4 @@
+dictionary.txt
+heart
+wince
+output.txt
