@@ -19,7 +19,7 @@ class WordLadder {
 
     bool vectorcontains(vector<string> vec, string word);
     void findnext(vector<string> &nextwords, vector<string> &used, string word);
-    void printstack(stack<string> stack, string outputFile);
+    void printstack(stack<string> stack, ofstream &outfile);
     
     
   public:

@@ -9,10 +9,12 @@ WordLadder::WordLadder(const string &file) {
     if (infile.is_open()) {
         while (!infile.eof()) {
             getline(infile,word);
+            /*
             if (word.length() != 5) {
                 cout << "Word not exactly five characters detected!" << endl;
                 return;
             }
+            */
             dict.push_back(word.c_str());
         }
         infile.close();
@@ -34,6 +36,9 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     bool startgood = false;
     bool endgood = false;
     
+    ofstream outfile;
+    outfile.open(outputFile.c_str());
+    
     stack.push(start);
     queue.push(stack);
     
@@ -46,11 +51,8 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         }
     }
     if (!endgood || !startgood) {
-        ofstream outfile;
         if (outfile.is_open()) {
-            outfile.open(outputFile.c_str());
             outfile << "Error. Start or end words are not in the dictionary.";
-            outfile.close();
         }
         return;
     }          
@@ -74,7 +76,7 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
                 stack.push(end);
                 //print the stack
                 //cout << "Match found.";
-                printstack(stack,outputFile);
+                printstack(stack,outfile);
                 return;
             } else {
                 tempstack = stack;
@@ -86,8 +88,6 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         queue.pop();
     }
     // if a word ladder is not found, then do this
-    ofstream outfile;
-    outfile.open(outputFile.c_str());
     if (outfile.is_open()) {
         outfile << "No Word Ladder Found!!";
         outfile.close();
@@ -125,9 +125,8 @@ void WordLadder::findnext(vector<string> &nextwords, vector<string> &used, strin
     }
 }
 
-void WordLadder::printstack(stack<string> stack, string outputFile) {
-    ofstream outfile;
-    outfile.open(outputFile.c_str());
+void WordLadder::printstack(stack<string> stack, ofstream &outfile) {
+    
     if (outfile.is_open()) {
         while (!stack.empty()) {
             outfile << stack.top();
@@ -135,11 +134,7 @@ void WordLadder::printstack(stack<string> stack, string outputFile) {
             if (!stack.empty()) {
                 outfile << " ";
             }
-        outfile.close();
         }
-    } else {
-        cout << "Error opening output file" << endl;
-        return;
     }
     //cout << endl;
 }

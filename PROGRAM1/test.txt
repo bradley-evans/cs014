@@ -1,4 +1,4 @@
 dictionary.txt
-output.txt
+outa.txt
 afdss
 agegr
