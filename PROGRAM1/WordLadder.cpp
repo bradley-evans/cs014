@@ -111,6 +111,7 @@ bool WordLadder::vectorcontains(vector<string> vec, string word) {
 void WordLadder::findnext(vector<string> &nextwords, vector<string> &used, string word) {
 
     string nextword;
+    list<string>::iterator it;
     //int interrupt=0;
     unsigned i;
     char ltr;
@@ -119,7 +120,7 @@ void WordLadder::findnext(vector<string> &nextwords, vector<string> &used, strin
         nextword = word;
         for (ltr = 'a'; ltr <= 'z'; ++ltr) {
             nextword[i]=ltr;
-            for (list<string>::iterator it=dict.begin();it!=dict.end();++it) {
+            for (it=dict.begin();it!=dict.end();++it) {
                 if (*it == nextword && !vectorcontains(used,nextword)) {
                     nextwords.push_back(nextword);
                     used.push_back(nextword);
