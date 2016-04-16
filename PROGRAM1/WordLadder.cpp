@@ -20,7 +20,7 @@ WordLadder::WordLadder(const string &file) {
         infile.close();
         return;
     } else {
-        cout << "Error opening input file" << endl;
+        cout << "Error opening input file." << endl;
         return;
     }
 }
@@ -38,6 +38,10 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     
     ofstream outfile;
     outfile.open(outputFile.c_str());
+    if (!outfile.is_open()) {
+        cout << "Opening output file failed.";
+        return;
+    }
     
     if (start == end) {
         outfile << start;
