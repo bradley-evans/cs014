@@ -95,7 +95,6 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     // if a word ladder is not found, then do this
     if (outfile.is_open()) {
         outfile << "No Word Ladder Found!!";
-        outfile.close();
     }
 }
 
@@ -137,7 +136,7 @@ void WordLadder::printstack(stack<string> stack, ofstream &outfile) {
             outfile << stack.top();
             stack.pop();
             if (!stack.empty()) {
-                outfile << endl;
+                outfile << " ";
             }
         }
     }

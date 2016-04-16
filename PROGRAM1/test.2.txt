@@ -1,4 +1,4 @@
 dictionary.txt
-wince
-heart
-output.txt
+outb.txt
+hears
+hears
