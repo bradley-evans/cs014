@@ -136,9 +136,9 @@ void WordLadder::printstack(stack<string> stack, ofstream &outfile) {
         while (!stack.empty()) {
             outfile << stack.top();
             stack.pop();
-            //if (!stack.empty()) {
-                outfile << " ";
-            //}
+            if (!stack.empty()) {
+                outfile << endl;
+            }
         }
     }
     //cout << endl;
