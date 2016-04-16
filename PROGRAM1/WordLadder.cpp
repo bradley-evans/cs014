@@ -39,6 +39,11 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     ofstream outfile;
     outfile.open(outputFile.c_str());
     
+    if (start == end) {
+        outfile << start;
+        return;
+    }
+    
     stack.push(start);
     queue.push(stack);
     
