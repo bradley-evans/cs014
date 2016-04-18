@@ -125,9 +125,10 @@ void WordLadder::findnext(vector<string> &nextwords, vector<string> &used, strin
         for (ltr = 'a'; ltr <= 'z'; ++ltr) {
             nextword[i]=ltr;
             for (it=dict.begin();it!=dict.end();++it) {
-                if (*it == nextword && !vectorcontains(used,nextword)) {
+                if (*it == nextword /*&& !vectorcontains(used,nextword)*/) {
                     nextwords.push_back(nextword);
-                    used.push_back(nextword);
+                    //used.push_back(nextword);
+                    dict.erase(it++);
                 }
             }
         }
