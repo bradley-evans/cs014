@@ -1,14 +1,15 @@
-main.exe: main.o WordLadder.o
-	g++ -Wall -Werror main.o WordLadder.o -o main.exe 
-	./main.exe < test.txt
-	./main.exe < test.1.txt
-	./main.exe < test.2.txt
+main.exe: main.o BSTree.o Node.o
+	g++ -Wall -Werror main.o BSTree.o Node.o -o main.exe 
+	./main.exe < testharness
 	
-main.o: main.cpp WordLadder.cpp WordLadder.h
-	g++ -Wall -Werror -c main.cpp WordLadder.cpp
+main.o: main.cpp BSTree.cpp BSTree.h Node.cpp Node.h
+	g++ -Wall -Werror -c main.cpp BSTree.cpp Node.cpp
 	
-WordLadder.o: WordLadder.cpp WordLadder.h
+BSTree.o: BSTree.cpp BSTree.h Node.cpp Node.h
 	g++ -Wall -Werror -c WordLadder.cpp
+
+Node.o: Node.cpp Node.h
+	g++ -Wall -Werror -c Node.cpp
 
 clean:
 	rm *.o *.exe output.txt
