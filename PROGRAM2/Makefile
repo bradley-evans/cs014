@@ -1,4 +1,4 @@
-main.exe: main.o BSTree.o Node.o
+main.exe: main.o BSTree.o Node.o testharness
 	g++ -Wall -Werror main.o BSTree.o Node.o -o main.exe 
 	./main.exe < testharness
 	
@@ -12,4 +12,4 @@ Node.o: Node.cpp Node.h
 	g++ -Wall -Werror -c Node.cpp
 
 clean:
-	rm *.o *.exe output.txt
+	rm *.o *.exe
