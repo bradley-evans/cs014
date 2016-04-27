@@ -26,6 +26,10 @@ bool BSTree::search(const string &searchstr) const {
 Search for a string in the binary search tree. It should return true if
 the string is in the tree, and false otherwise.
 */
+    if (root == 0) {
+        // the tree is empty, you doofus
+        return false;
+    }
     return search(searchstr,root);
 }
 bool BSTree::search(const string &searchstr, Node* node) const {
@@ -149,6 +153,7 @@ the node to remove).
     if (root == 0) {
         // the tree is empty, nothing to see here.
         // otherwise, move on to the recursive private helper function
+        return;
     }
     remove_search(root,searchstr);
 }
@@ -303,7 +308,7 @@ void BSTree::preOrder_recursive( Node* curr ) {
     if (curr == 0 || root == 0) {
           return;
     }
-    cout << curr->data << " (" << curr->currcount() << "), ";
+    cout << curr->data << "(" << curr->currcount() << "), ";
     preOrder_recursive(curr->left);  
     preOrder_recursive(curr->right);
 
@@ -317,7 +322,7 @@ void BSTree::inOrder_recursive( Node* curr ) {
         return;
     }
     inOrder_recursive(curr->left);
-    cout << curr->data << " (" << curr->currcount() << "), ";
+    cout << curr->data << "(" << curr->currcount() << "), ";
     inOrder_recursive(curr->right);
 }
 
@@ -331,7 +336,7 @@ void BSTree::postOrder_recursive( Node* curr ) {
     }
     postOrder_recursive(curr->left);  
     postOrder_recursive(curr->right);
-    cout << curr->data << " (" << curr->currcount() << "), ";
+    cout << curr->data << "(" << curr->currcount() << "), ";
 
 }
 

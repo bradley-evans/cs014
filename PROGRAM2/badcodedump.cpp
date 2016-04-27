@@ -54,3 +54,25 @@ void BinarySearchTree::remove_node(Node* node) { // actually delete a node
         delete node;
     }
 }
+
+/*
+golf
+oscar
+foxtrot
+papa
+alpha
+india
+mike
+juliet
+quebec
+bravo
+epsilon
+india
+delta
+alpha
+hotel
+charlie
+lima
+kilo
+india
+*/
