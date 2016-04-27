@@ -27,7 +27,7 @@ int main() {
     cout << tree.largest() << endl;
     cout << "Smallest item in tree: ";
     cout << tree.smallest() << endl;
-    cout << "Checking to see if 'lima' is still in the list...";
+    cout << "Checking to see if 'lima' is still in the list..." << endl;
     tree.search("lima");
     cout << "Height of lima: " << tree.height("lima") << endl;
     cout << "Height of golf: " << tree.height("golf") << endl;

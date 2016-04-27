@@ -29,20 +29,20 @@ the string is in the tree, and false otherwise.
     return search(searchstr,root);
 }
 bool BinarySearchTree::search(const string &searchstr, Node* node) const {
-    cout << "Searching recursively (at " << node->data << ")...";
+    //cout << "Searching recursively (at " << node->data << ")...";
     if (node->data == searchstr) {
-        cout << "Found " << node->data << "." << endl;
+        //cout << "Found " << node->data << "." << endl;
         return true;
     }
     if (searchstr > node->data) {
         if (node->right == 0) {
-            cout << "No right child of " << node->data << "." << endl;
+            //cout << "No right child of " << node->data << "." << endl;
             return false;
         }
         return search(searchstr, node->right);
     } else {
         if (node->left == 0) {
-            cout << "No left child of " << node->data << "." << endl;
+            //cout << "No left child of " << node->data << "." << endl;
             return false;
         }
         return search(searchstr,node->left);
@@ -105,7 +105,7 @@ height of a leaf node is 0 (count the number of edges on the longest
 path). Return -1 if the string does not exist.
 */
     if (!search(searchstr)) {
-        cout << "String " << searchstr << " not found." << endl;
+        //cout << "String " << searchstr << " not found." << endl;
         return -1;
     }
     Node *node = nodesearch(searchstr, root);
@@ -176,12 +176,12 @@ void BinarySearchTree::remove_node(Node* node) { // actually delete a node
     // there are five cases. case 0 is an empty tree, which is handled above.
     //Node *swapNode;
     
-    cout << "REMOVE OPERATION: DELETING [" << node->data << "]...";
+    //cout << "REMOVE OPERATION: DELETING [" << node->data << "]...";
     //case 1: a leaf, simply delete it
     if (node->left == 0 && node->right == 0) {
-        cout << "Leaf...";
+        //cout << "Leaf...";
         if (node->data > node->up->data) {
-            cout << "Right Child...";
+            //cout << "Right Child...";
             // then this is the right child and a leaf
             if (node->up == 0) {
                 root = 0;
@@ -189,72 +189,70 @@ void BinarySearchTree::remove_node(Node* node) { // actually delete a node
                 node->up->right = 0;
             }
             delete node;
-            cout << "Deleted node." << endl;
+            //cout << "Deleted node." << endl;
         } else {
             // then it must be the left child
-            cout << "Left Child...";
+            //cout << "Left Child...";
             if (node->up == 0) {
                 root = 0;
             } else {
                 node->up->left = 0;
             }
             delete node;
-            cout << "Deleted node." << endl;
+            //cout << "Deleted node." << endl;
         }
     
     // case 2: a node with one left child
     } else if (node->left != 0 && node->right == 0) {
-        cout << "Node with one left child...";
+        //cout << "Node with one left child...";
         if (node->up == 0) {
             root = node->left;
         } else if (node->data > node->up->data) {
             // then node is the right child of parent
-            cout << "Right child of parent...";
-            } else {
-                node->up->right = node->left;
-            }
+            //cout << "Right child of parent...";
+            node->up->right = node->left;
             delete node;
-            cout << "Deleted node." << endl;
+            //cout << "Deleted node." << endl;
         } else {
             // then it must be the left child of parent
-            cout << "Left child of parent...";
+            //cout << "Left child of parent...";
             node->up->left = node->left;
             delete node;    
-            cout << "Deleted node." << endl;
+            //cout << "Deleted node." << endl;
         }
     
     // case 3: a node with one right child
     } else if (node->left == 0 && node->right != 0) {
-        cout << "Node with one right child...";  
+        //cout << "Node with one right child...";  
         if (node->up == 0) {
-            root -> node->right;
+            root = node->right;
         } else if (node->data < node->up->data) {
-            cout << "Left child of parent...";
+            //cout << "Left child of parent...";
             // then node is the right child of parent
             node->up->left = node->right;
             delete node;
-            cout << "Deleted node." << endl;
+            //cout << "Deleted node." << endl;
         } else {
-            cout << "Right child of parent...";
+            //cout << "Right child of parent...";
             // then it must be the left child of parent
             node->up->right = node->right;
             delete node;       
-            cout << "Deleted node." << endl;
+            //cout << "Deleted node." << endl;
         }
         
     // case 4: a node with two children
     } else if (node->left != 0 && node->right != 0) {
-        cout << "Node with two children...";
+        //cout << "Node with two children...";
         // find inorder successor node
         Node *swapNode = minNode(node->right);
         // store all data from this node
         string tempdata = swapNode->data;
         int tempcount = swapNode->count;
-        cout << "This node's data will be changed to [" << tempdata << "]. Calling remove recursively on " << swapNode->data << endl;
+        //cout << "This node's data will be changed to [" << tempdata << "]. Calling remove recursively on " << swapNode->data << endl;
         remove_node(swapNode);
         node->data = tempdata;
         node->count = tempcount;
-        cout << "Two-child node deletion complete." << endl;;
+        //cout << "Two-child node deletion complete." << endl;;
     }
 }
 Node* BinarySearchTree::minNode(Node* node) {
