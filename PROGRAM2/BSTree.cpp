@@ -183,13 +183,21 @@ void BinarySearchTree::remove_node(Node* node) { // actually delete a node
         if (node->data > node->up->data) {
             cout << "Right Child...";
             // then this is the right child and a leaf
-            node->up->right = 0;
+            if (node->up == 0) {
+                root = 0;
+            } else {
+                node->up->right = 0;
+            }
             delete node;
             cout << "Deleted node." << endl;
         } else {
             // then it must be the left child
             cout << "Left Child...";
-            node->up->left = 0;
+            if (node->up == 0) {
+                root = 0;
+            } else {
+                node->up->left = 0;
+            }
             delete node;
             cout << "Deleted node." << endl;
         }
@@ -197,10 +205,14 @@ void BinarySearchTree::remove_node(Node* node) { // actually delete a node
     // case 2: a node with one left child
     } else if (node->left != 0 && node->right == 0) {
         cout << "Node with one left child...";
-        if (node->data > node->up->data) {
+        if (node->up == 0) {
+            root = node->left;
+        } else if (node->data > node->up->data) {
             // then node is the right child of parent
             cout << "Right child of parent...";
-            node->up->right = node->left;
+            } else {
+                node->up->right = node->left;
+            }
             delete node;
             cout << "Deleted node." << endl;
         } else {
@@ -214,7 +226,9 @@ void BinarySearchTree::remove_node(Node* node) { // actually delete a node
     // case 3: a node with one right child
     } else if (node->left == 0 && node->right != 0) {
         cout << "Node with one right child...";  
-        if (node->data < node->up->data) {
+        if (node->up == 0) {
+            root -> node->right;
+        } else if (node->data < node->up->data) {
             cout << "Left child of parent...";
             // then node is the right child of parent
             node->up->left = node->right;
