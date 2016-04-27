@@ -155,7 +155,11 @@ the node to remove).
 void BinarySearchTree::remove_search(Node* node, const string &string) {
     if (node->data == string) {
         // we found the node for deletion
-        remove_node(node);
+        if (node->count > 1) {
+            node->dec();
+        } else {
+            remove_node(node);
+        }
     } else if (node->data < string) {
         if (node->right == 0) {
             // dead end found

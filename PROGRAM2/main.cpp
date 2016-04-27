@@ -1,64 +1,94 @@
 #include <iostream>
-#include <string>
 #include "BSTree.h"
+
 using namespace std;
 
-int main() {
+void printOrders(BSTree *tree) {
+  cout << "Preorder = ";
+  tree->preOrder( );
+  cout << "Inorder = ";
+  tree->inOrder( );
+  cout << "Postorder = ";
+  tree->postOrder( );
+}
+
+int menu() {
+  int choice = 0;
+  cout << endl << "Enter menu choice: ";
+  cout << endl;
+  cout 
+    << "1. Insert" << endl
+    << "2. Remove" << endl
+    << "3. Print" << endl
+    << "4. Search" << endl
+    << "5. Smallest" << endl
+    << "6. Largest" << endl
+    << "7. Height" << endl
+    << "8. Quit" << endl;
+  cin >> choice;
+  
+  // fix buffer just in case non-numeric choice entered
+  // also gets rid of newline character
+  cin.clear();
+  cin.ignore(256, '\n');
+  return choice;
+}
+
+int main( ) {
+
+  BSTree tree;
+
+  int choice = menu();
+
+  string entry;
+  
+  while (choice != 8) {
     
-    BinarySearchTree tree;
-    string currstring;
-    int i;
-    
-    for (i=0;i<20;i++) {
-        cin >> currstring;
-        tree.insert(currstring);
-        cout << "Added " << currstring << " to tree." << endl;
+    if (choice == 1) {
+      cout << "Enter string to insert: ";
+      getline(cin, entry);
+      cout << endl;
+      
+      tree.insert(entry);
+      
+    } else if (choice == 2) {
+      cout << "Enter string to remove: ";
+      getline(cin, entry);
+      cout << endl;
+      
+      tree.remove(entry);
+      
+    } else if (choice == 3) {
+      printOrders(&tree);
+      
+    } else if (choice == 4) {
+      cout << "Enter string to search for: ";
+      getline(cin, entry);
+      cout << endl;
+      
+      if (tree.search(entry)) {
+        cout << "Found" << endl;
+      } else {
+        cout << "Not Found" << endl;
+      }
+
+    } else if (choice == 5) {
+      cout << "Smallest: " << tree.smallest() << endl;
+      
+    } else if (choice == 6) {
+      cout << "Largest: " << tree.largest() << endl;
+      
+    } else if (choice == 7) {
+      cout << "Enter string: ";
+      getline(cin, entry);
+      cout << endl;
+      cout << "Height of subtree rooted at " << entry << ": " 
+        << tree.height(entry) << endl;
+        
     }
-    cout << "In Order: ";
-    tree.inOrder();
-    cout << endl;
-    cout << "Pre Order: ";
-    tree.preOrder();
-    cout << endl;
-    cout << "Post Order: ";
-    tree.postOrder();
-    cout << endl;
-    cout << "Largest item in tree: ";
-    cout << tree.largest() << endl;
-    cout << "Smallest item in tree: ";
-    cout << tree.smallest() << endl;
-    cout << "Checking to see if 'lima' is still in the list..." << endl;
-    tree.search("lima");
-    cout << "Height of lima: " << tree.height("lima") << endl;
-    cout << "Height of golf: " << tree.height("golf") << endl;
-    cout << "Height of oscar: " << tree.height("oscar") << endl;
-    cout << "Height of fakestring: " << tree.height("fakestring") << endl;
-    cout << "Deleting 'quebec' ..." << endl;
-    tree.remove("quebec");
-    cout << "In Order: ";
-    tree.inOrder();
-    cout << endl;
-    cout << "Deleting 'charlie' ..." << endl;
-    tree.remove("charlie");
-    cout << "In Order: ";
-    tree.inOrder();
-    cout << endl;
-    cout << "Deleting 'juliet' ..." << endl;
-    tree.remove("juliet");
-    cout << "In Order: ";
-    tree.inOrder();
-    cout << endl;
-    cout << "Deleting 'epsilon' ..." << endl;
-    tree.remove("epsilon");
-    cout << "In Order: ";
-    tree.inOrder();
-    cout << endl;
-    cout << "Deleting 'golf' ..." << endl;
-    tree.remove("golf");
-    cout << "In Order: ";
-    tree.inOrder();
-    cout << endl;
-    cout << "Checking to see if 'lima' is still in the list..." << endl;
-    if (tree.search("lima")) { cout << "Found lima." << endl; }
-    
+    //fix buffer just in case non-numeric choice entered
+    choice = menu();
+  }
+  
+  return 0;
 }
