@@ -3,7 +3,7 @@ using namespace std;
 
 
 
-void BinarySearchTree::insert(const string &newdata) {
+void BSTree::insert(const string &newdata) {
 /* 
 Insert an item into the binary search tree. Be sure to keep the binary 
 search tree properties. When an item is first inserted into the tree the
@@ -21,14 +21,14 @@ just be incremented.
     }
 }
 
-bool BinarySearchTree::search(const string &searchstr) const {
+bool BSTree::search(const string &searchstr) const {
 /*
 Search for a string in the binary search tree. It should return true if
 the string is in the tree, and false otherwise.
 */
     return search(searchstr,root);
 }
-bool BinarySearchTree::search(const string &searchstr, Node* node) const {
+bool BSTree::search(const string &searchstr, Node* node) const {
     //cout << "Searching recursively (at " << node->data << ")...";
     if (node->data == searchstr) {
         //cout << "Found " << node->data << "." << endl;
@@ -48,7 +48,7 @@ bool BinarySearchTree::search(const string &searchstr, Node* node) const {
         return search(searchstr,node->left);
     }
 }
-Node* BinarySearchTree::nodesearch(const string &searchstr, Node* node) const {
+Node* BSTree::nodesearch(const string &searchstr, Node* node) const {
     if (node->data == searchstr) {
         return node;
     }
@@ -65,10 +65,10 @@ Node* BinarySearchTree::nodesearch(const string &searchstr, Node* node) const {
     }
 }
 
-string BinarySearchTree::largest() const {
+string BSTree::largest() const {
     return largest_recursive(root);
 }
-string BinarySearchTree::largest_recursive(Node* node) const {
+string BSTree::largest_recursive(Node* node) const {
 /* 
 Find and return the largest value in the tree. Return an empty string if
 the tree is empty.
@@ -81,10 +81,10 @@ the tree is empty.
     }
     return largest_recursive(node->right);
 }
-string BinarySearchTree::smallest() const {
+string BSTree::smallest() const {
     return smallest_recursive(root);
 }
-string BinarySearchTree::smallest_recursive(Node* node) const {
+string BSTree::smallest_recursive(Node* node) const {
 /*
 Find and return the smallest value in the tree. Return an empty string
 if the tree is empty.
@@ -98,7 +98,7 @@ if the tree is empty.
     return smallest_recursive(node->left);
 
 }
-int BinarySearchTree::height (const string &searchstr) const {
+int BSTree::height (const string &searchstr) const {
 /*
 Compute and return the height of a particular string in the tree. The 
 height of a leaf node is 0 (count the number of edges on the longest 
@@ -111,7 +111,7 @@ path). Return -1 if the string does not exist.
     Node *node = nodesearch(searchstr, root);
     return height(node,-1);
 }
-int BinarySearchTree::height(Node *node, int i) const {
+int BSTree::height(Node *node, int i) const {
     if (node->left == 0 && node->right == 0) {
         return i;
     }
@@ -130,7 +130,7 @@ int BinarySearchTree::height(Node *node, int i) const {
     }
     return i;
 }
-void BinarySearchTree::remove(const string &searchstr) {
+void BSTree::remove(const string &searchstr) {
 /*
 Remove a specified string from the tree. Be sure to maintain all binary
 search tree properties. If removing a node with a count greater than 1,
@@ -152,7 +152,7 @@ the node to remove).
     }
     remove_search(root,searchstr);
 }
-void BinarySearchTree::remove_search(Node* node, const string &string) {
+void BSTree::remove_search(Node* node, const string &string) {
     if (node->data == string) {
         // we found the node for deletion
         if (node->count > 1) {
@@ -176,7 +176,7 @@ void BinarySearchTree::remove_search(Node* node, const string &string) {
         }
     }
 }
-void BinarySearchTree::remove_node(Node* node) { // actually delete a node
+void BSTree::remove_node(Node* node) { // actually delete a node
     // there are five cases. case 0 is an empty tree, which is handled above.
     //Node *swapNode;
     
@@ -259,20 +259,20 @@ void BinarySearchTree::remove_node(Node* node) { // actually delete a node
         //cout << "Two-child node deletion complete." << endl;;
     }
 }
-Node* BinarySearchTree::minNode(Node* node) {
+Node* BSTree::minNode(Node* node) {
     if (node->left == 0) {
         return node;
     }
     return minNode(node->left);
 }
-Node* BinarySearchTree::maxNode(Node* node) {
+Node* BSTree::maxNode(Node* node) {
     if (node->right == 0) {
         return node;
     }
     return maxNode(node->right);
 }
 
-void BinarySearchTree::addnode(Node* node, string string) {
+void BSTree::addnode(Node* node, string string) {
     if (node->data < string) {
         if (node->right != 0) {
             addnode(node->right, string);
@@ -295,12 +295,12 @@ void BinarySearchTree::addnode(Node* node, string string) {
 }
 
 
-void BinarySearchTree::preOrder() {
+void BSTree::preOrder() {
     preOrder_recursive(root);
 }
-void BinarySearchTree::preOrder_recursive( Node* curr ) {
+void BSTree::preOrder_recursive( Node* curr ) {
 
-    if (curr == 0) {
+    if (curr == 0 || root == 0) {
           return;
     }
     cout << curr->data << " (" << curr->currcount() << "), ";
@@ -309,11 +309,11 @@ void BinarySearchTree::preOrder_recursive( Node* curr ) {
 
 }
 
-void BinarySearchTree::inOrder() {
+void BSTree::inOrder() {
     inOrder_recursive(root);
 }
-void BinarySearchTree::inOrder_recursive( Node* curr ) {
-    if ( curr == 0 ) {
+void BSTree::inOrder_recursive( Node* curr ) {
+    if ( curr == 0 || root == 0 ) {
         return;
     }
     inOrder_recursive(curr->left);
@@ -321,12 +321,12 @@ void BinarySearchTree::inOrder_recursive( Node* curr ) {
     inOrder_recursive(curr->right);
 }
 
-void BinarySearchTree::postOrder() {
+void BSTree::postOrder() {
     postOrder_recursive(root);
 }
-void BinarySearchTree::postOrder_recursive( Node* curr ) {
+void BSTree::postOrder_recursive( Node* curr ) {
 
-    if (curr == 0) {
+    if (curr == 0 || root == 0) {
           return;
     }
     postOrder_recursive(curr->left);  

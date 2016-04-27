@@ -4,7 +4,7 @@
 #include <string>
 
 class Node {
-    friend class BinarySearchTree;
+    friend class BSTree;
     private:
         int count;   // counts existance of duplicates
         std::string data; // the data held in this node

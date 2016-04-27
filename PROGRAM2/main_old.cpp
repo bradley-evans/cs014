@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
     
-    BinarySearchTree tree;
+    BSTree tree;
     string currstring;
     int i;
     
