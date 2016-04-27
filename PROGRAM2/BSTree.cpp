@@ -128,27 +128,35 @@ void BinarySearchTree::remove_node(Node* node) { // actually delete a node
             node->up->left = 0;
             delete node;
         }
-    }
+    
     // case 2: a node with one left child
-    if (node->left != 0 && node->right == 0) {
+    } else if (node->left != 0 && node->right == 0) {
+        cout << "Node with one left child." << endl;
         swapNode = maxNode(node->left);
         swapNode->up->right = 0;
         node->data = swapNode->data;
+        node->count = swapNode->count;
         delete swapNode;
-    }
+    
     // case 3: a node with one right child
-    if (node->left == 0 && node->right != 0) {
+    } else if (node->left == 0 && node->right != 0) {
+        cout << "Node with one right child." << endl;  
         swapNode = minNode(node->right);
-        swapNode->up->left = 0;
         node->data = swapNode->data;
+        node->count = swapNode->count;
+        cout << "The minimum node was " << node->data << " (" << node->count << ")" << endl;
+        
+        swapNode->up->left = 0;
         delete swapNode;
-    }
+    
     // case 4: a node with two children
-    if (node->left != 0 && node->right != 0) {
+    } else if (node->left != 0 && node->right != 0) {
+        cout << "Node with two children." << endl;
         // treat it as a node with only a right child
         swapNode = minNode(node->right);
         swapNode->up->left = 0;
         node->data = swapNode->data;
+        node->count = swapNode->count;
         delete swapNode;
     }
 }
@@ -162,6 +170,7 @@ Node* BinarySearchTree::maxNode(Node* node) {
     if (node->right == 0) {
         return node;
     }
+    cout << "recurse";
     return maxNode(node->right);
 }
 
