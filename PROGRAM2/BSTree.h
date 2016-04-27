@@ -22,6 +22,9 @@ class BinarySearchTree {
         void remove_search(Node *node, const std::string &string);
         Node* minNode(Node *node);
         Node* maxNode(Node *node);
+        int height (Node *node, int i) const;
+        bool search(const std::string &searchstr, Node* node) const;
+        Node* nodesearch(const std::string &searchstr, Node* node) const;
     
     public:
         BinarySearchTree() { root = 0; }

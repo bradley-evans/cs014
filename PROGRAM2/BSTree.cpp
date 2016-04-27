@@ -26,8 +26,43 @@ bool BinarySearchTree::search(const string &searchstr) const {
 Search for a string in the binary search tree. It should return true if
 the string is in the tree, and false otherwise.
 */
-
-return false;
+    return search(searchstr,root);
+}
+bool BinarySearchTree::search(const string &searchstr, Node* node) const {
+    cout << "Searching recursively (at " << node->data << ")...";
+    if (node->data == searchstr) {
+        cout << "Found " << node->data << "." << endl;
+        return true;
+    }
+    if (searchstr > node->data) {
+        if (node->right == 0) {
+            cout << "No right child of " << node->data << "." << endl;
+            return false;
+        }
+        return search(searchstr, node->right);
+    } else {
+        if (node->left == 0) {
+            cout << "No left child of " << node->data << "." << endl;
+            return false;
+        }
+        return search(searchstr,node->left);
+    }
+}
+Node* BinarySearchTree::nodesearch(const string &searchstr, Node* node) const {
+    if (node->data == searchstr) {
+        return node;
+    }
+    if (searchstr > node->data) {
+        if (node->right == 0) {
+            return 0;
+        }
+        return nodesearch(searchstr, node->right);
+    } else {
+        if (node->left == 0) {
+            return 0;
+        }
+        return nodesearch(searchstr,node->left);
+    }
 }
 
 string BinarySearchTree::largest() const {
@@ -69,8 +104,31 @@ Compute and return the height of a particular string in the tree. The
 height of a leaf node is 0 (count the number of edges on the longest 
 path). Return -1 if the string does not exist.
 */
-
-return 0;
+    if (!search(searchstr)) {
+        cout << "String " << searchstr << " not found." << endl;
+        return -1;
+    }
+    Node *node = nodesearch(searchstr, root);
+    return height(node,-1);
+}
+int BinarySearchTree::height(Node *node, int i) const {
+    if (node->left == 0 && node->right == 0) {
+        return i;
+    }
+    if (node->left != 0 && node->right != 0) {
+        int leftheight = height(node->left,1);
+        int rightheight = height(node->right,1);
+        if (leftheight > rightheight) {
+            return i+leftheight;
+        } else {
+            return i+rightheight;
+        }
+    } else if (node->left == 0 && node-> right != 0) {
+        return height(node->right,i+1);
+    } else {
+        return height(node->left,i+1);
+    }
+    return i;
 }
 void BinarySearchTree::remove(const string &searchstr) {
 /*
@@ -173,12 +231,13 @@ void BinarySearchTree::remove_node(Node* node) { // actually delete a node
     // case 4: a node with two children
     } else if (node->left != 0 && node->right != 0) {
         cout << "Node with two children...";
-        // copy all data from right child into this node
-        // recursively call remove on right child
-        string tempdata = node->right->data;
-        int tempcount = node->right->count;
-        cout << "This node's data will be changed to [" << tempdata << "]. Calling remove recursively on " << node->right->data << endl;
-        remove_node(node->right);
+        // find inorder successor node
+        Node *swapNode = minNode(node->right);
+        // store all data from this node
+        string tempdata = swapNode->data;
+        int tempcount = swapNode->count;
+        cout << "This node's data will be changed to [" << tempdata << "]. Calling remove recursively on " << swapNode->data << endl;
+        remove_node(swapNode);
         node->data = tempdata;
         node->count = tempcount;
         cout << "Two-child node deletion complete." << endl;;
@@ -194,7 +253,6 @@ Node* BinarySearchTree::maxNode(Node* node) {
     if (node->right == 0) {
         return node;
     }
-    cout << "recurse";
     return maxNode(node->right);
 }
 
