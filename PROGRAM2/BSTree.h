@@ -7,7 +7,7 @@
 #include <string>
 
 
-class BinarySearchTree {
+class BSTree {
     private:
         Node *root;
         
@@ -27,7 +27,7 @@ class BinarySearchTree {
         Node* nodesearch(const std::string &searchstr, Node* node) const;
     
     public:
-        BinarySearchTree() { root = 0; }
+        BSTree() { root = 0; }
         void insert(const std::string &newdata);
         /* 
         Insert an item into the binary search tree. Be sure to keep the binary 
