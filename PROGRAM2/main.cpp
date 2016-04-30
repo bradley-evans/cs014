@@ -56,7 +56,7 @@ int main( ) {
       
     } else if (choice == 2) {
       cout << "Enter string to remove: ";
-      getline(cin, entry); cout << entry;
+      getline(cin, entry);
       cout << endl;
       
       tree.remove(entry);
