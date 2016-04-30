@@ -116,21 +116,17 @@ path). Return -1 if the string does not exist.
     return height(node,0);
 }
 int BSTree::height(Node *node, int i) const {
-    if (node->left == 0 && node->right == 0) {
-        return i;
+    int leftheight = 0, rightheight = 0;
+    if (node->left != 0) {
+        leftheight = height(node->left,1);
     }
-    if (node->left != 0 && node->right != 0) {
-        int leftheight = height(node->left,1);
-        int rightheight = height(node->right,1);
-        if (leftheight > rightheight) {
-            return i+leftheight;
-        } else {
-            return i+rightheight;
-        }
-    } else if (node->left == 0 && node-> right != 0) {
-        return height(node->right,i+1);
+    if (node->right != 0) {
+        rightheight = height(node->right,1);
+    }
+    if (leftheight > rightheight) {
+        i = i+leftheight;
     } else {
-        return height(node->left,i+1);
+        i = i+rightheight;
     }
     return i;
 }
@@ -227,9 +223,6 @@ void BSTree::remove_node(Node* node) { // actually delete a node
     // case 2: a node with one left child
     } else if (node->left != 0 && node->right == 0) {
         //cout << "Node with one left child...";
-        if (node->up == 0) {
-            root = node->left;
-        }
         Node *swapNode = maxNode(node->left);
         string tempdata = swapNode->data;
         int tempcount = swapNode->count;
@@ -254,10 +247,6 @@ void BSTree::remove_node(Node* node) { // actually delete a node
     // case 3: a node with one right child
     } else if (node->left == 0 && node->right != 0) {
         //cout << "Node with one right child...";  
-        if (node->up == 0) {
-            //cout << "No 'up' node detected! Setting this node to root...";
-            root = node->right;
-        } 
         Node *swapNode = minNode(node->right);
         string tempdata = swapNode->data;
         int tempcount = swapNode->count;
@@ -283,7 +272,7 @@ void BSTree::remove_node(Node* node) { // actually delete a node
     } else if (node->left != 0 && node->right != 0) {
         //cout << "Node with two children...";
         // find inorder successor node
-        Node *swapNode = minNode(node->right);
+        Node *swapNode = maxNode(node->left);
         // store all data from this node
         string tempdata = swapNode->data;
         int tempcount = swapNode->count;
