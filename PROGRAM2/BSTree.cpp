@@ -154,13 +154,18 @@ the node to remove).
         // the tree is empty, nothing to see here.
         // otherwise, move on to the recursive private helper function
         return;
+    } else {
+        remove_search(root,searchstr);
     }
-    remove_search(root,searchstr);
 }
 void BSTree::remove_search(Node* node, const string &string) {
+    
+    
     if (node->data == string) {
         // we found the node for deletion
+        //cout << "REMOVE OPERATION: DELETING [" << node->data << "]...";
         if (node->count > 1) {
+            //cout << "Node has a count greater than 1. Decrementing count." << endl;
             node->dec();
         } else {
             remove_node(node);
@@ -174,6 +179,7 @@ void BSTree::remove_search(Node* node, const string &string) {
         }
     } else if (node->data > string) {
         if (node->left == 0) {
+            //cout << "Node not found." << endl;
             // dead end found
             return;
         } else {
@@ -185,10 +191,17 @@ void BSTree::remove_node(Node* node) { // actually delete a node
     // there are five cases. case 0 is an empty tree, which is handled above.
     //Node *swapNode;
     
-    //cout << "REMOVE OPERATION: DELETING [" << node->data << "]...";
     //case 1: a leaf, simply delete it
     if (node->left == 0 && node->right == 0) {
         //cout << "Leaf...";
+        if (node->up == 0) {
+            // this is a root node and a leaf
+            //cout << "Singular root node detected...";
+            root = 0;
+            delete node;
+            //cout << "Deleted node." << endl;
+            return;
+        }
         if (node->data > node->up->data) {
             //cout << "Right Child...";
             // then this is the right child and a leaf
@@ -234,6 +247,7 @@ void BSTree::remove_node(Node* node) { // actually delete a node
     } else if (node->left == 0 && node->right != 0) {
         //cout << "Node with one right child...";  
         if (node->up == 0) {
+            //cout << "No 'up' node detected! Setting this node to root...";
             root = node->right;
         } else if (node->data < node->up->data) {
             //cout << "Left child of parent...";
