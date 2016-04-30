@@ -113,7 +113,7 @@ path). Return -1 if the string does not exist.
         return -1;
     }
     Node *node = nodesearch(searchstr, root);
-    return height(node,-1);
+    return height(node,0);
 }
 int BSTree::height(Node *node, int i) const {
     if (node->left == 0 && node->right == 0) {
@@ -229,7 +229,15 @@ void BSTree::remove_node(Node* node) { // actually delete a node
         //cout << "Node with one left child...";
         if (node->up == 0) {
             root = node->left;
-        } else if (node->data > node->up->data) {
+        }
+        Node *swapNode = maxNode(node->left);
+        string tempdata = swapNode->data;
+        int tempcount = swapNode->count;
+        remove_node(swapNode);
+        node->data = tempdata;
+        node->count = tempcount;
+        /*
+        else if (node->data > node->up->data) {
             // then node is the right child of parent
             //cout << "Right child of parent...";
             node->up->right = node->left;
@@ -242,14 +250,22 @@ void BSTree::remove_node(Node* node) { // actually delete a node
             delete node;    
             //cout << "Deleted node." << endl;
         }
-    
+        */
     // case 3: a node with one right child
     } else if (node->left == 0 && node->right != 0) {
         //cout << "Node with one right child...";  
         if (node->up == 0) {
             //cout << "No 'up' node detected! Setting this node to root...";
             root = node->right;
-        } else if (node->data < node->up->data) {
+        } 
+        Node *swapNode = minNode(node->right);
+        string tempdata = swapNode->data;
+        int tempcount = swapNode->count;
+        remove_node(swapNode);
+        node->data = tempdata;
+        node->count = tempcount;
+        /*
+        else if (node->data < node->up->data) {
             //cout << "Left child of parent...";
             // then node is the right child of parent
             node->up->left = node->right;
@@ -262,7 +278,7 @@ void BSTree::remove_node(Node* node) { // actually delete a node
             delete node;       
             //cout << "Deleted node." << endl;
         }
-        
+        */
     // case 4: a node with two children
     } else if (node->left != 0 && node->right != 0) {
         //cout << "Node with two children...";
