@@ -1,6 +1,6 @@
 main.exe: main.o Tree.o Node.o
 	g++ -Wall -Werror main.o Tree.o Node.o -o main.exe 
-	./main.exe < testharness.txt
+	./main.exe
 	
 main.o: main.cpp Tree.cpp Tree.h Node.cpp Node.h
 	g++ -Wall -Werror -c main.cpp Tree.cpp Node.cpp
