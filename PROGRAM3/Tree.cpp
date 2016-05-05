@@ -14,9 +14,9 @@ void Tree::inOrder(Node *node) {
         return;
     }
     if (node->left != 0) {inOrder(node->left);}
-    // cout << node->small << ", ";
+    cout << node->small << ", ";
     if (node->middle != 0) {inOrder(node->middle);}
-    if (!node->large.empty()) {// cout << node->large << ", ";}
+    if (!node->large.empty()) { cout << node->large << ", ";}
     if (node->right != 0) {inOrder(node->right);}
     return;
 }
