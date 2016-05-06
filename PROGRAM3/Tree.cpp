@@ -11,17 +11,16 @@ void Tree::preOrder(Node *node) {
     if (node == 0) {
         return;
     }
-    cout << node->small << ", ";
-    if (node->left != 0) {
+    if (node->large.empty()) {
+        // this is a two-node
+        cout << node->small << ", ";
         preOrder(node->left);
-    }
-    if (node->middle != 0) {
-        preOrder(node->middle);
-    }
-    if (!node->large.empty()) {
+        preOrder(node->right);
+    } else {
+        cout << node->small << ", ";
+        preOrder(node->left);
         cout << node->large << ", ";
-    }
-    if (node->right != 0) {
+        preOrder(node->middle);
         preOrder(node->right);
     }
     return;
@@ -31,19 +30,18 @@ void Tree::inOrder(Node *node) {
     if (node == 0) {
         return;
     }
-    if (node->left != 0) {
+    if (node->large.empty()) {
+        // then this is a two node
         inOrder(node->left);
-    }
-    cout << node->small << ", ";
-    if (node->middle != 0) {
+        cout << node->small << ", ";
+        inOrder(node->right);
+    } else {
+        inOrder(node->left);
+        cout << node->small << ", ";
         inOrder(node->middle);
-        
-    }
-    if (!node->large.empty()) {
         cout << node->large << ", ";
-        
+        inOrder(node->right);
     }
-    if (node->right != 0) {inOrder(node->right);}
     return;
 }
 void Tree::postOrder(Node *node) {
@@ -51,12 +49,18 @@ void Tree::postOrder(Node *node) {
     if (node == 0) {
         return;
     }
-    postOrder(node->left);
-    if (!node->large.empty()) { cout << node->small << ", "; }
-    postOrder(node->middle);
-    postOrder(node->right);
-    if ( node->large.empty()) { cout << node->small << ", "; }
-    if (!node->large.empty()) { cout << node->large << ", "; }
+    if (node->large.empty()) {
+        // two node
+        postOrder(node->left);
+        postOrder(node->right);
+        cout << node->small << ", ";
+    } else {
+        postOrder(node->left);
+        postOrder(node->middle);
+        cout << node->small << ", ";
+        postOrder(node->right);
+        cout << node->large << ", ";
+    }
 }
 void Tree::search(const string &, Node *) {
   
