@@ -16,6 +16,7 @@ private:
   Node* locateLeaf(Node *, std::string);
   void addnode(Node*, std::string);
   void splitRoot(std::string);
+  Node* node_search(Node* node, std::string string);
 
 public:
   Tree( );

@@ -325,6 +325,36 @@ void Tree::postOrder( ) {
 void Tree::remove(const string &) {
   
 }
-bool Tree::search(const string &) {
-  return false;
+Node* Tree::node_search(Node* node, string string) {
+    if (node == 0) {
+        return 0;
+    }
+    if (node->small == string || node->large == string ) {
+        return node;
+    }
+    if (node->isTwoNode()) {
+        if (string < node->small) {
+            return node_search(node->left,string);
+        } else if (string > node->small) {
+            return node_search(node->right,string);
+        }
+    }
+    if (node->isThreeNode()) {
+        if (string < node->small) {
+            return node_search(node->left,string); 
+        } else if (string > node->large) {
+            cout << "Search middle...";
+            return node_search(node->right,string);
+        } else {
+            return node_search(node->middle,string);
+        }
+    }
+    return 0;
+}
+bool Tree::search(const string &string) {
+    if (node_search(root,string) != 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
