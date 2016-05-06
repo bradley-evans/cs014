@@ -7,21 +7,56 @@ using namespace std;
 
 
 void Tree::preOrder(Node *node) {
-  
-}
-void Tree::inOrder(Node *node) {
-    if (root == 0) {
+    
+    if (node == 0) {
         return;
     }
-    if (node->left != 0) {inOrder(node->left);}
     cout << node->small << ", ";
-    if (node->middle != 0) {inOrder(node->middle);}
-    if (!node->large.empty()) { cout << node->large << ", ";}
+    if (node->left != 0) {
+        preOrder(node->left);
+    }
+    if (node->middle != 0) {
+        preOrder(node->middle);
+    }
+    if (!node->large.empty()) {
+        cout << node->large << ", ";
+    }
+    if (node->right != 0) {
+        preOrder(node->right);
+    }
+    return;
+}
+void Tree::inOrder(Node *node) {
+    
+    if (node == 0) {
+        return;
+    }
+    if (node->left != 0) {
+        inOrder(node->left);
+    }
+    cout << node->small << ", ";
+    if (node->middle != 0) {
+        inOrder(node->middle);
+        
+    }
+    if (!node->large.empty()) {
+        cout << node->large << ", ";
+        
+    }
     if (node->right != 0) {inOrder(node->right);}
     return;
 }
 void Tree::postOrder(Node *node) {
-  
+    
+    if (node == 0) {
+        return;
+    }
+    postOrder(node->left);
+    if (!node->large.empty()) { cout << node->small << ", "; }
+    postOrder(node->middle);
+    postOrder(node->right);
+    if ( node->large.empty()) { cout << node->small << ", "; }
+    if (!node->large.empty()) { cout << node->large << ", "; }
 }
 void Tree::search(const string &, Node *) {
   
@@ -275,15 +310,13 @@ void Tree::insert(const string &string) {
     addnode(target,string);
 }
 void Tree::preOrder( ) {
-/*
-
-*/
+    preOrder(root);
 }
 void Tree::inOrder( ) {
     inOrder(root);
 }
 void Tree::postOrder( ) {
-
+    postOrder(root);
 }
 void Tree::remove(const string &) {
   
