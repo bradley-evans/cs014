@@ -17,6 +17,8 @@ private:
   void addnode(Node*, std::string);
   void splitRoot(std::string);
   Node* node_search(Node* node, std::string string);
+  void remove(Node* node, std::string string);
+  bool isLeaf(Node* node);
 
 public:
   Tree( );

@@ -299,32 +299,6 @@ void Tree::splitRoot(string string) {
         return;
     }
 }
-
-// PUBLIC FUNCTIONS
-Tree::Tree() {
-    root = 0;
-}
-Tree::~Tree() {
-
-}
-void Tree::insert(const string &string) {
-    Node *target = 0;
-    // cout << "Inserting [" << string << "]...";
-    target = locateLeaf(root, string);
-    addnode(target,string);
-}
-void Tree::preOrder( ) {
-    preOrder(root);
-}
-void Tree::inOrder( ) {
-    inOrder(root);
-}
-void Tree::postOrder( ) {
-    postOrder(root);
-}
-void Tree::remove(const string &) {
-  
-}
 Node* Tree::node_search(Node* node, string string) {
     if (node == 0) {
         return 0;
@@ -350,6 +324,85 @@ Node* Tree::node_search(Node* node, string string) {
         }
     }
     return 0;
+}
+void Tree::remove(Node* node, string string) {
+    if (node == 0) {
+        // then the earlier node_search call returned that the node was not
+        // found. Return.
+        return;
+    }
+    if (node == root && isLeaf(node)) {
+        if (node->isTwoNode()) {
+            root = 0;
+            delete node;
+            return;
+        } else {
+            if (string == node->large) {
+                node->large.clear();
+                return;
+            } else {
+                node->small = node->large;
+                node->large.clear();
+                return;
+            }
+        }
+    }
+    if (isLeaf(node)) {
+        if (node->isTwoNode()) {
+            if (node->parent->isTwoNode()) {
+                // the parent is a two node
+                if (node->small < node->parent->small) {
+                    node->parent->left = 0;
+                    delete node;
+                    return;
+                } else {
+                    node->parent->right = 0;
+                    delete node;
+                    return;
+                }
+            } else {
+                // then the parent is a three node
+            }
+        }
+    }
+}
+bool Tree::isLeaf(Node* node) {
+    if (node->left == 0 && node->right == 0 && node->middle == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
+
+// PUBLIC FUNCTIONS
+Tree::Tree() {
+    root = 0;
+}
+Tree::~Tree() {
+
+}
+
+void Tree::insert(const string &string) {
+    Node *target = 0;
+    // cout << "Inserting [" << string << "]...";
+    target = locateLeaf(root, string);
+    addnode(target,string);
+}
+void Tree::preOrder( ) {
+    preOrder(root);
+}
+void Tree::inOrder( ) {
+    inOrder(root);
+}
+void Tree::postOrder( ) {
+    postOrder(root);
+}
+void Tree::remove(const string &string) {
+    Node *target = node_search(root,string);
+    remove(target,string);
 }
 bool Tree::search(const string &string) {
     if (node_search(root,string) != 0) {
