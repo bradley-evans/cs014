@@ -3,6 +3,7 @@
 using namespace std;
 
 
+
 // PRIVATE FUNCTIONS
 
 
@@ -317,7 +318,6 @@ Node* Tree::node_search(Node* node, string string) {
         if (string < node->small) {
             return node_search(node->left,string); 
         } else if (string > node->large) {
-            cout << "Search middle...";
             return node_search(node->right,string);
         } else {
             return node_search(node->middle,string);
@@ -331,21 +331,38 @@ void Tree::remove(Node* node, string string) {
         // found. Return.
         return;
     }
-    if (node == root && isLeaf(node)) {
-        if (node->isTwoNode()) {
-            root = 0;
-            delete node;
-            return;
-        } else {
-            if (string == node->large) {
-                node->large.clear();
+    if (node == root) {
+        if (isLeaf(node)) {
+            if (node->isTwoNode()) {
+                root = 0;
+                delete node;
                 return;
             } else {
-                node->small = node->large;
-                node->large.clear();
+                if (string == node->large) {
+                    node->large.clear();
+                    return;
+                } else {
+                    node->small = node->large;
+                    node->large.clear();
+                    return;
+                }
+            }
+        } else if (node->isTwoNode()) {
+            if (node->left->isTwoNode() && node->right->isTwoNode()) {
+                
+                // TODO -- clean out this ugly solution
+                
+                node->small = node->left->small;
+                node->large = node->right->small;
+                delete node->left;
+                delete node->right;
+                node->left = 0;
+                node->right = 0;
                 return;
+                
             }
         }
+        
     }
     if (isLeaf(node)) {
         if (node->isTwoNode()) {
@@ -353,15 +370,23 @@ void Tree::remove(Node* node, string string) {
                 // the parent is a two node
                 if (node->small < node->parent->small) {
                     node->parent->left = 0;
+                    node->parent->large = node->parent->right->small;
+                    delete node->parent->right;
+                    node->parent->right = 0;
                     delete node;
                     return;
                 } else {
                     node->parent->right = 0;
+                    node->parent->large = node->parent->small;
+                    node->parent->small = node->parent->left->small;
+                    delete node->parent->left;
+                    node->parent->left = 0;
                     delete node;
                     return;
                 }
             } else {
                 // then the parent is a three node
+                cout << "String to be removed is in a three node...";
                 if (string < node->small) {
                     node->parent->left = 0;
                     delete node;
@@ -372,10 +397,12 @@ void Tree::remove(Node* node, string string) {
                     return;
                 } else {
                     // this must be the middle leaf
+                    cout << "Middle leaf...";
                     node->parent->middle = 0;
                     delete node;
                     return;
                 }
+                cout << "Something went wrong.";
             }
         } else {
             // then the data being deleted is in a three node
