@@ -362,6 +362,28 @@ void Tree::remove(Node* node, string string) {
                 }
             } else {
                 // then the parent is a three node
+                if (string < node->small) {
+                    node->parent->left = 0;
+                    delete node;
+                    return;
+                } else if (string > node->large) {
+                    node->parent->right = 0;
+                    delete node;
+                    return;
+                } else {
+                    // this must be the middle leaf
+                    node->parent->middle = 0;
+                    delete node;
+                    return;
+                }
+            }
+        } else {
+            // then the data being deleted is in a three node
+            if (string == node->large) {
+                node->large.clear();
+            } else {
+                node->small = node->large;
+                node->large.clear();
             }
         }
     }
