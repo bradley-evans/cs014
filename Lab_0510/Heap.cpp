@@ -23,23 +23,34 @@ void Heap::swap(PrintJob* job1, PrintJob* job2) {
   
 }
 
-void Heap::trickleDown(int i) {
-  if (i >= numItems - 1) {
+void Heap::trickleDown(int i) 
+{
+  if (i >= numItems) 
+  {
     return;
   }
-  if (arr[2*i + 1]->priority > arr[2*i + 2]->priority) {
-    // left child is larger than right child
-    if (arr[2*i + 1]->priority > arr[i]->priority) {
-      swap(arr[2*i + 1], arr[i]);
-      trickleDown(2*i + 1);
+  else if (2*i + 1 < numItems && 2*i + 2 < numItems)
+  {
+    if (arr[2*i + 1]->priority > arr[2*i + 2]->priority) 
+    {
+      // left child is larger than right child
+      if (arr[2*i + 1]->priority > arr[i]->priority) 
+      {
+        swap(arr[2*i + 1], arr[i]);
+        trickleDown(2*i + 1);
+      }
     }
-  } else {
-    // right child is bigger than left child
-    if (arr[2*i + 2]->priority > arr[i]->priority) {
-      swap(arr[2*i + 2], arr[i]);
-      trickleDown(2*i + 2);
+    else 
+    {
+      // right child is bigger than left child
+      if (arr[2*i + 2]->priority > arr[i]->priority) 
+      {
+        swap(arr[2*i + 2], arr[i]);
+        trickleDown(2*i + 2);
+      }
     }
   }
+  else return;
 }
 
 /*This function is called by dequeue function
@@ -109,32 +120,43 @@ void Heap::dequeue () {
   if (arr[0] != 0 && numItems != 0) {
     if (0 == numItems - 1)
     {
-      cout << "WHAT" <<endl;
+      cout << "Testing..." << endl;
       arr[0]->priority = 0;
       arr[0]->numPages = 0;
-      arr[0]->jobNumber = 0;
+      arr[0]->jobNumber = 0;  // I think trickle down is going out of range
+      delete arr[0];          // bc when i dq in the else below....  
+      arr[0] = 0;
       --numItems;
     }
     else
     {
       // cout << "ARR PRIORITY AT NUMITEMS - 1 IS: " << arr[numItems-1]->priority << endl;
-      swap(arr[0], arr[numItems-1]);
-      delete arr[numItems-1];
-      numItems--;
-      trickleDown(0);
+      swap(arr[0], arr[numItems - 1]);
+      delete arr[numItems - 1];
+      arr[numItems - 1] = 0; // ... when I don't set this to 0, i get random
+      numItems--;             // garbage values for priority, job, etc 
+      trickleDown(0);         // when i dq and cant dq past that
     }
   }
 }
 
 /*Returns the node with highest priority.*/
-PrintJob* Heap::highest ( ) {
-  return arr[0];
+PrintJob* Heap::highest ( ) 
+{
+  if (arr[0])
+  {
+    return arr[0];
+  }
+  else return 0;
 }
 
 /*Prints the PrintJob with highest priority in the following format:
 Priority: priority, Job Number: jobNum, Number of Pages: numPages
 (Add a new line at the end.)*/
 void Heap::print ( ) {
-  cout << "Priority: " << arr[0]->priority << ", Job Number: " << arr[0]->jobNumber << ", Number of Pages: " << arr[0]->numPages << endl;
+  if (arr[0] != 0) {
+  cout << "Priority: " << arr[0]->priority << ", Job Number: " 
+  << arr[0]->jobNumber << ", Number of Pages: " << arr[0]->numPages << endl;
+  }
   
 }

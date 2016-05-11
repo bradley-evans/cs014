@@ -11,7 +11,7 @@ int menu() {
     << "1. Enqueue" << endl
     << "2. Print" << endl
     << "3. Dequeue" << endl
-    << "33. Largest" << endl
+    << "33. Highest" << endl
     << "4. Quit" << endl;
   cin >> choice;
 
