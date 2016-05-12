@@ -3,19 +3,13 @@
 
 using namespace std;
 
-#include <iostream>
-#include "Tree.h"
-
-using namespace std;
-
 void printOrders(Tree *tree) {
   cout << "Preorder = ";
   tree->preOrder( );
-  cout << endl <<"Inorder = ";
+  cout << "Inorder = ";
   tree->inOrder( );
-  cout << endl << "Postorder = ";
+  cout << "Postorder = ";
   tree->postOrder( );
-  cout << endl;
 }
 
 int menu() {
