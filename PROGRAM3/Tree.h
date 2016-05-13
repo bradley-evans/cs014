@@ -19,6 +19,10 @@ private:
   Node* node_search(Node* node, std::string string);
   void remove(Node* node, std::string string);
   bool isLeaf(Node* node);
+  void reorder(Node* node);
+  
+  Node* findSmallPredecessor(Node* node);
+  Node* findLargePredecessor(Node* node);
 
 public:
   Tree( );
