@@ -31,16 +31,16 @@ void Tree::inOrder(Node *node) {
     if (node == 0) {
         return;
     }
-    if (node->large.empty()) {
+    if (node->isTwoNode()) {
         // then this is a two node
         inOrder(node->left);
-        cout /**/ << node->small << ", ";
+        cout << node->small << ", ";
         inOrder(node->right);
     } else {
         inOrder(node->left);
-        cout /**/ << node->small << ", ";
+        cout << node->small << ", ";
         inOrder(node->middle);
-        cout /**/ << node->large << ", ";
+        cout << node->large << ", ";
         inOrder(node->right);
     }
     return;
@@ -165,63 +165,118 @@ void Tree::addnode(Node *target, string string) {
             return;
         }
     }
-    if (!target->small.empty() && !target->large.empty()) {
+    if (target->isThreeNode()) {
         // case: a three node
         if (target->parent == 0) {
              cout /**/ << "A root three-node was detected, splitting root...";
              splitRoot(string);
              return;
         } else if (target->parent->isTwoNode()) {
-        cout /**/ << "Inserting into a three node...";
-            // case: parent is a two node
-            if (string < target->small) {
-                // promote the small node and split
-                cout /**/ << "Inserting and promoting " << target->small << "...";
-                addnode(target->parent, target->small);
-                target->small = string;
-                if (target->parent->middle == 0) {
-                    cout /**/ << "Creating a middle node...";
-                    target->parent->middle = new Node(target->large);
-                    target->parent->middle->parent = target->parent;
-                } else if (target->parent->middle != 0) {
-                    addnode(target->parent->middle, target->large);
-                }
-                target->large.clear();
-                cout /**/ << "Node is now [" << target->small << "] [" << target->large << "]" << endl;
-                return;
-            }
-            if (string > target->large) {
-                // promote the large node and split
-                cout /**/ << "Inserting and promoting " << target->large << "...";
-                addnode(target->parent, target->large);
-                target->large = string;
-                if (target->parent->middle == 0) {
-                    cout /**/ << "Creating a middle node...";
-                    target->parent->middle = new Node(target->small);
-                    target->parent->middle->parent = target->parent;
-                } else if (target->parent->middle != 0) {
-                    addnode(target->parent->middle, target->small);
-                }
-                target->small = string;
-                target->large.clear();
-                cout /**/ << "Node is now [" << target->small << "] [" << target->large << "]" << endl;
-                return;
-            }
-            if (string > target->small && string < target->large) {
-                // promote the new node and split
-                cout /**/ << "Promoting " << string << "...";
-                addnode(target->parent, string);
-                if (target->parent->middle == 0) {
-                    cout /**/ << "Creating a middle node...";
-                    target->parent->middle = new Node(target->large);
-                    target->parent->middle->parent = target->parent;
-                } else if (target->parent->middle != 0) {
-                    addnode(target->parent->middle, target->large);
-                }
-                target->large.clear();
-                cout /**/ << "Node is now [" << target->small << "] [" << target->large << "]" << endl;
-                return;
-            }
+            cout /**/ << "Inserting into a three node with two node parent...";
+                // case: parent is a two node
+                if (target->parent->left == target) {
+                    if (string < target->small) {
+                        // promote the small node and split
+                        cout /**/ << "Inserting and promoting " << target->small << "...";
+                        addnode(target->parent, target->small);
+                        target->small = string;
+                        cout /**/ << "Placed " << string << " into small value of node...";
+                        if (target->parent->middle == 0) {
+                            cout /**/ << "Creating a middle node...";
+                            target->parent->middle = new Node(target->large);
+                            Node* newmiddle = target->parent->middle;
+                            newmiddle->parent = target->parent;
+                            cout /**/ << "New middle node is [" << newmiddle->small << "] [" << newmiddle->large << "] ...";
+                        } else if (target->parent->middle != 0) {
+                            addnode(target->parent->middle, target->large);
+                        }
+                        target->large.clear();
+                        cout /**/ << "Target node is now [" << target->small << "] [" << target->large << "]" << endl;
+                        return;
+                    }
+                    if (string > target->large) {
+                        // promote the large node and split
+                        cout /**/ << "Inserting and promoting " << target->large << "...";
+                        addnode(target->parent, target->large);
+                        if (target->parent->middle == 0) {
+                            cout /**/ << "Creating a middle node...";
+                            target->parent->middle = new Node(string);
+                            target->parent->middle->parent = target->parent;
+                        } else if (target->parent->middle != 0) {
+                            addnode(target->parent->middle, target->small);
+                        }
+                        target->large.clear();
+                        cout /**/ << "Node is now [" << target->small << "] [" << target->large << "]" << endl;
+                        return;
+                    }
+                    if (string > target->small && string < target->large) {
+                        // promote the new node and split
+                        cout /**/ << "Promoting " << string << "...";
+                        addnode(target->parent, string);
+                        if (target->parent->middle == 0) {
+                            cout /**/ << "Creating a middle node...";
+                            target->parent->middle = new Node(target->large);
+                            target->parent->middle->parent = target->parent;
+                        } else if (target->parent->middle != 0) {
+                            addnode(target->parent->middle, target->large);
+                        }
+                        target->large.clear();
+                        cout /**/ << "Node is now [" << target->small << "] [" << target->large << "]" << endl;
+                        return;
+                    }
+                } else if (target->parent->right == target) {
+                    if (string < target->small) {
+                        // promote the small node and split
+                        cout /**/ << "Inserting and promoting " << target->small << "...";
+                        addnode(target->parent, target->small);
+                        target->small = string;
+                        cout /**/ << "Placed " << string << " into small value of node...";
+                        if (target->parent->middle == 0) {
+                            cout /**/ << "Creating a middle node...";
+                            target->parent->middle = new Node(target->small);
+                            Node* newmiddle = target->parent->middle;
+                            newmiddle->parent = target->parent;
+                            cout /**/ << "New middle node is [" << newmiddle->small << "] [" << newmiddle->large << "] ...";
+                        } else if (target->parent->middle != 0) {
+                            addnode(target->parent->middle, target->large);
+                        }
+                        target->small = target->large;
+                        target->large.clear();
+                        cout /**/ << "Target node is now [" << target->small << "] [" << target->large << "]" << endl;
+                        return;
+                    }
+                    if (string > target->large) {
+                        // promote the large node and split
+                        cout /**/ << "Inserting and promoting " << target->large << "...";
+                        addnode(target->parent, target->large);
+                        if (target->parent->middle == 0) {
+                            cout /**/ << "Creating a middle node...";
+                            target->parent->middle = new Node(target->small);
+                            target->parent->middle->parent = target->parent;
+                        } else if (target->parent->middle != 0) {
+                            addnode(target->parent->middle, target->small);
+                        }
+                        target->small = string;
+                        target->large.clear();
+                        cout /**/ << "Node is now [" << target->small << "] [" << target->large << "]" << endl;
+                        return;
+                    }
+                    if (string > target->small && string < target->large) {
+                        // promote the new node and split
+                        cout /**/ << "Promoting " << string << "...";
+                        addnode(target->parent, string);
+                        if (target->parent->middle == 0) {
+                            cout /**/ << "Creating a middle node...";
+                            target->parent->middle = new Node(target->large);
+                            target->parent->middle->parent = target->parent;
+                        } else if (target->parent->middle != 0) {
+                            addnode(target->parent->middle, target->large);
+                        }
+                        target->large.clear();
+                        cout /**/ << "Node is now [" << target->small << "] [" << target->large << "]" << endl;
+                        return;
+                    }
+                }   
         }
         if (target->parent->isThreeNode()) {
             cout /**/ << "Parent is a three node, splitting...";
@@ -569,5 +624,75 @@ bool Tree::search(const string &string) {
         return true;
     } else {
         return false;
+    }
+}
+
+/*
+=============================
+VISUALIZATION FUNCTIONS
+=============================
+*/
+
+void Tree::visualizeTree(const string &outputFilename){
+    ofstream outFS(outputFilename.c_str());
+    if(!outFS.is_open()){
+        cout<<"Error"<<endl;
+        return;
+    }
+    outFS<<"digraph G {"<<endl;
+    visualizeTree(outFS,root);
+    outFS<<"}";
+    outFS.close();
+    string jpgFilename = outputFilename.substr(0,outputFilename.size()-4)+".jpg";
+    string command = "dot -Tjpg " + outputFilename + " -o " + jpgFilename;
+    system(command.c_str());
+}
+//---------------------------------------------------
+void Tree::visualizeTree(ofstream & outFS, Node *n){
+    if(n){
+        string parentData = "\"" + n->small;
+        if(n->large != ""){
+            parentData += ", " + n->large + "\"";
+        }
+        else{
+            parentData += "\"";
+        }
+        outFS<<parentData << "[ label = "<<parentData<<"];"<<endl;
+        
+        if(n->left){
+            string childData = "\"" + n->left->small;
+            if(n->left->large!=""){
+                childData += ", " + n->left->large + "\"";
+            }
+            else{
+                childData += "\"";
+            }
+            visualizeTree(outFS,n->left);
+            outFS<<parentData<<" ->  "<<childData<<";"<<endl;
+        }
+        
+        if(n->middle){
+            string childData =  "\""+n->middle->small;
+            if(n->middle->large!=""){
+                childData += ", " + n->middle->large + "\"";
+            }
+            else{
+                childData += "\"";
+            }
+            visualizeTree(outFS,n->middle);
+            outFS<<parentData<<" ->  "<<childData<<";"<<endl;
+        }
+        
+        if(n->right){
+            string childData =  "\"" + n->right->small;
+            if(n->right->large != ""){
+                childData += ", " + n->right->large + "\"";
+            }
+            else{
+                childData += "\"";
+            }
+            visualizeTree(outFS,n->right);
+            outFS<<parentData<<" ->  "<<childData<<";"<<endl;
+        }
     }
 }

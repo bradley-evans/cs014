@@ -12,4 +12,4 @@ Node.o: Node.cpp Node.h
 	g++ -Wall -Werror -c Node.cpp
 
 clean:
-	rm *.o *.exe
+	rm *.o *.exe *.dot *.jpg

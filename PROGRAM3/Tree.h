@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <cstdlib>
 
 #include "Node.h"
 
@@ -33,6 +35,8 @@ public:
   void postOrder( );
   void remove(const std::string &);
   bool search (const std::string &);
+  void visualizeTree(const std::string &outputFilename);
+  void visualizeTree(std::ofstream & outFS, Node *n);
 
 private:
   // Add additional functions/variables here
