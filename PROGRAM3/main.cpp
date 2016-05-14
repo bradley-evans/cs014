@@ -68,6 +68,8 @@ int main( ) {
       } else {
         cout << "Not Found" << endl;
       }
+    } else if (choice == 6) {
+      tree.visualizeTree("treevis.dot");
     }
 
     //fix buffer just in case non-numeric choice entered

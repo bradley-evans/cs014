@@ -1,3 +1,5 @@
+
+#include <string>
 #include "Tree.h"
 
 using namespace std;
@@ -64,7 +66,7 @@ void Tree::postOrder(Node *node) {
     }
 }
 void Tree::search(const string &, Node *) {
-  
+
 }
 Node* Tree::locateLeaf(Node *node, string string) {
     // cout /**/ << "Finding leaf node...";
@@ -125,21 +127,22 @@ Node* Tree::locateLeaf(Node *node, string string) {
     }
     return 0;
 }
-void Tree::addnode(Node *target, string string) {
+void Tree::addnode(Node *target, string str) {
+    string temp;
     // simplest cases
     if (root == 0) {
         // cout /**/ << "Inserting at root node." << endl;
         // then this is a root node
-        root = new Node(string);
+        root = new Node(str);
         return;
     }
-    if (target->small == string) {
+    if (target->small == str) {
         // cout /**/ << "Incrementing." << endl;
         // data match
         target->small_count++;
         return;
     }
-    if (target->large == string) {
+    if (target->large == str) {
         // cout /**/ << "Incrementing." << endl;
         // data match
         target->large_count++;
@@ -149,18 +152,18 @@ void Tree::addnode(Node *target, string string) {
     if (!target->small.empty() && target->large.empty()) {
         // cout /**/ << "Inserting into a two-node...";
         // case: a two node
-        if (string > target->small) {
-            // cout /**/ << "Inserting case: new string larger than existing string in node...";
-            // case: a two-node where the new string is larger than the existing data
-            target->large = string;
+        if (str > target->small) {
+            // cout /**/ << "Inserting case: new str larger than existing str in node...";
+            // case: a two-node where the new str is larger than the existing data
+            target->large = str;
             // cout /**/ << "Node is now [" << target->small << "] [" << target->large << "]" << endl;
             return;
         } 
-        if (string < target->small) {
-            // cout /**/ << "Inserting case: new string smaller than existing string in node...";
-            // case: a two node where the new string is smaller than the existing data
+        if (str < target->small) {
+            // cout /**/ << "Inserting case: new str smaller than existing str in node...";
+            // case: a two node where the new str is smaller than the existing data
             target->large = target->small;
-            target->small = string;
+            target->small = str;
             // cout /**/ << "Node is now [" << target->small << "] [" << target->large << "]" << endl;
             return;
         }
@@ -169,18 +172,18 @@ void Tree::addnode(Node *target, string string) {
         // case: a three node
         if (target->parent == 0) {
              // cout /**/ << "A root three-node was detected, splitting root...";
-             splitRoot(string);
+             splitRoot(str);
              return;
         } else if (target->parent->isTwoNode()) {
             // cout /**/ << "Inserting into a three node with two node parent...";
                 // case: parent is a two node
                 if (target->parent->left == target) {
-                    if (string < target->small) {
+                    if (str < target->small) {
                         // promote the small node and split
                         // cout /**/ << "Inserting and promoting " << target->small << "...";
                         addnode(target->parent, target->small);
-                        target->small = string;
-                        // cout /**/ << "Placed " << string << " into small value of node...";
+                        target->small = str;
+                        // cout /**/ << "Placed " << str << " into small value of node...";
                         if (target->parent->middle == 0) {
                             // cout /**/ << "Creating a middle node...";
                             target->parent->middle = new Node(target->large);
@@ -194,13 +197,13 @@ void Tree::addnode(Node *target, string string) {
                         // cout /**/ << "Target node is now [" << target->small << "] [" << target->large << "]" << endl;
                         return;
                     }
-                    if (string > target->large) {
+                    if (str > target->large) {
                         // promote the large node and split
                         // cout /**/ << "Inserting and promoting " << target->large << "...";
                         addnode(target->parent, target->large);
                         if (target->parent->middle == 0) {
                             // cout /**/ << "Creating a middle node...";
-                            target->parent->middle = new Node(string);
+                            target->parent->middle = new Node(str);
                             target->parent->middle->parent = target->parent;
                         } else if (target->parent->middle != 0) {
                             addnode(target->parent->middle, target->small);
@@ -209,10 +212,10 @@ void Tree::addnode(Node *target, string string) {
                         // cout /**/ << "Node is now [" << target->small << "] [" << target->large << "]" << endl;
                         return;
                     }
-                    if (string > target->small && string < target->large) {
+                    if (str > target->small && str < target->large) {
                         // promote the new node and split
-                        // cout /**/ << "Promoting " << string << "...";
-                        addnode(target->parent, string);
+                        // cout /**/ << "Promoting " << str << "...";
+                        addnode(target->parent, str);
                         if (target->parent->middle == 0) {
                             // cout /**/ << "Creating a middle node...";
                             target->parent->middle = new Node(target->large);
@@ -225,12 +228,12 @@ void Tree::addnode(Node *target, string string) {
                         return;
                     }
                 } else if (target->parent->right == target) {
-                    if (string < target->small) {
+                    if (str < target->small) {
                         // promote the small node and split
                         // cout /**/ << "Inserting and promoting " << target->small << "...";
                         addnode(target->parent, target->small);
-                        target->small = string;
-                        // cout /**/ << "Placed " << string << " into small value of node...";
+                        target->small = str;
+                        // cout /**/ << "Placed " << str << " into small value of node...";
                         if (target->parent->middle == 0) {
                             // cout /**/ << "Creating a middle node...";
                             target->parent->middle = new Node(target->small);
@@ -245,7 +248,7 @@ void Tree::addnode(Node *target, string string) {
                         // cout /**/ << "Target node is now [" << target->small << "] [" << target->large << "]" << endl;
                         return;
                     }
-                    if (string > target->large) {
+                    if (str > target->large) {
                         // promote the large node and split
                         // cout /**/ << "Inserting and promoting " << target->large << "...";
                         addnode(target->parent, target->large);
@@ -256,15 +259,15 @@ void Tree::addnode(Node *target, string string) {
                         } else if (target->parent->middle != 0) {
                             addnode(target->parent->middle, target->small);
                         }
-                        target->small = string;
+                        target->small = str;
                         target->large.clear();
                         // cout /**/ << "Node is now [" << target->small << "] [" << target->large << "]" << endl;
                         return;
                     }
-                    if (string > target->small && string < target->large) {
+                    if (str > target->small && str < target->large) {
                         // promote the new node and split
-                        // cout /**/ << "Promoting " << string << "...";
-                        addnode(target->parent, string);
+                        // cout /**/ << "Promoting " << str << "...";
+                        addnode(target->parent, str);
                         if (target->parent->middle == 0) {
                             // cout /**/ << "Creating a middle node...";
                             target->parent->middle = new Node(target->large);
@@ -279,39 +282,51 @@ void Tree::addnode(Node *target, string string) {
                 }   
         }
         if (target->parent->isThreeNode()) {
-            // cout /**/ << "Parent is a three node, splitting...";
-            if (string < target->small) {
-                // cout /**/ << "Promoting small...";
-                addnode(target->parent, target->small);
-                if (target->parent->middle == 0) {
-                    target->parent->middle = new Node(target->large);
-                    target->parent->middle->parent = target->parent;
-                    // cout /**/ << "Adding " << string << "...";
-                    target->small = string;
-                    target->large.clear();   
+            if (target->parent->left == target) {
+                // Target is a left-child three node with a three node parent
+                if (str < target->small) {
+                    temp = target->small;
+                    target->small = str;
+                    addnode(target->parent,temp);
+                    return;
+                } else if (str > target->large) {
+                    temp = target->large;
+                    target->large = str;
+                    addnode(target->parent,temp);
+                    return;
                 } else {
-                    addnode(target->parent->middle,target->large);
-                    target->small = string;
-                    target->large.clear();
+                    addnode(target->parent,str);
+                    return;
                 }
-                return;
-            }
-            if (string > target->large) {
-                addnode(target->parent, target->large);
-                if (target->parent->middle == 0) {
-                    target->parent->middle = new Node(target->small);
-                    target->parent->middle->parent = target->parent;
-                    target->small = string;
-                    target->large.clear();   
+                
+            } else if (target->parent->right == target) {
+                
+                // Target is a right-child three node with a three node parent
+                if (str < target->small) {
+                    
+                } else if (str > target->large) {
+                    
                 } else {
-                    addnode(target->parent->middle,target->large);
-                    target->large.clear();
+                    
                 }
-                return;
-            }    
-            if (string > target->small && string < target->large) {
+                
+            } else {
+                // Target is a middle-child three node with a three node parent
+                if (str < target->small) {
+                    temp = target->small;
+                    target->small = str;
+                    addnode(target->parent,temp);
+                    return;
+                } else if (str > target->large) {
+                    
+                } else {
+                    
+                }
                 
             }
+        
+        
+        
         }
     }
 }
@@ -344,13 +359,35 @@ void Tree::splitRoot(string string) {
     }
     if (string > root->small && string < root->large) {
         // promote new string to root
-        // cout /**/ << "splitting root case: new string is middle value...";
+        // cout /**/ << "splitting root case: new string is middle value...";        
         root->parent = new Node(string);
         root->parent->left = root;
         root->parent->right = new Node(root->large);
         root->parent->right->parent = root->parent;
         root->large.clear();
+        if (!isLeaf(root)) {
+            // Node *newLeft, *newRight, *middle;
+            // newLeft = root->parent->left;
+            // newRight = root->parent->right;
+            Node *middle = root->middle;
+            root->middle = 0;
+            //cout << "middle large: " << middle->large << endl;
+            //cout << "root right: " << root->right->small;
+            root->parent->right->right = root->right;
+            root->parent->right->right->parent = root->parent->right;
+            root->right = 0;
+            root->parent->left->right = new Node(middle->small);
+            root->parent->right->left = new Node(middle->large);
+            delete middle;
+            //cout << "root->parent->right->small: " << root->parent->right->small << endl;
+            //newLeft->right = new Node(middle->small);
+            //newRight->left = new Node(middle->large);
+        }
         root = root->parent;
+        // newRight->left = new Node(middle->large);
+        
+        // root->large.clear();
+        // root = root->parent;
         // cout /**/ << "Root successfully split with " << root->small << " as root." << endl;
         return;
     }
@@ -620,7 +657,9 @@ void Tree::remove(const string &string) {
     // cout /**/ << "Remove complete." << endl;
 }
 bool Tree::search(const string &string) {
-    if (node_search(root,string) != 0) {
+    Node *node = node_search(root,string);
+    //cout << "NODE SEARCH VALUE: " << node << endl;
+    if (node != 0) {
         return true;
     } else {
         return false;
