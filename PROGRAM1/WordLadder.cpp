@@ -77,9 +77,10 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         
         // find one-off matches
         findnext(nextwords,word,end);
-        //cout << "Nextwords size: " << nextwords.size() << endl;
+        //cout << "One off matches for " << word << ": ";
         if (nextwords.size() != 0) {
             for (i=0;i<nextwords.size(); i++) {
+                cout << nextwords.at(i) << " ";
                 if (nextwords.at(i)==end) {
                     // if the off by one word is the last word in the dictionary
                     // the ladder contains the entire stack -- complete and return.
@@ -87,6 +88,7 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
                     //print the stack
                     //cout << "Match found.";
                     printstack(stack,outfile);
+                    //cout << endl << "Complete!" << endl;
                     return;
                 } else {
                     // otherwise, create a copy of the front stack and push the
@@ -96,6 +98,9 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
                     queue.push(tempstack);
                 }
             }
+            cout << endl;
+        } else if (nextwords.size() == 0) {
+            cout << endl;
         }
         nextwords.clear();
         // dequeue the front stack
@@ -121,26 +126,28 @@ void WordLadder::findnext(vector<string> &nextwords, string word, string end) {
 
     string nextword;
     list<string>::iterator it;
-    //int interrupt=0;
     unsigned i;
     char ltr;
-    //cout << "Start findword for [" << word << "]...";
-    for (i=0;i<word.length();++i) {
-        //cout << "Found " << nextword << "...";
+    
+    for (i=0;i<5;++i) {
+        // Nextword is the word being manipulated.
+        // Word is the original word we are looking for one-off matches for.
         nextword = word;
         for (ltr = 'a'; ltr <= 'z'; ++ltr) {
+            // Change one letter in nextword.
             nextword[i]=ltr;
             for (it=dict.begin();it!=dict.end();++it) {
+                // Check the modified nextword against the dictionary.
                 if (*it == nextword) {
-                    //cout << "Pushing " << nextword << " into vector...";
                     it = dict.erase(it);
                     nextwords.push_back(nextword);
-                    //used.push_back(nextword);
+                    if (nextword == end) {
+                        return;
+                    }
                 }
             }
         }
     }
-    //cout << "Exiting findword." << endl;
 }
 
 void WordLadder::printstack(stack<string> stack, ofstream &outfile) {
