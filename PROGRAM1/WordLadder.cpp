@@ -97,10 +97,10 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
                     tempstack = stack;
                     tempstack.push(nextwords.at(i));
                     queue.push(tempstack);
+                    dict.remove(nextwords.at(i));
                 }
             }
         }
-        dict.remove(word);
         nextwords.clear();
         // dequeue the front stack
         queue.pop();
