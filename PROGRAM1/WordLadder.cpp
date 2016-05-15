@@ -31,11 +31,11 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         cout << "Opening output file failed.";
         return;
     }
-    
     if (start == end) {
         outfile << start;
         return;
-    }    
+    }
+    
     // set up the stuff
     queue< stack<string> > queue;
     stack< string > stack, tempstack;
@@ -68,31 +68,37 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     // find the first word, delete it
     dict.remove(start);
     
+    
     while(!queue.empty()) {
         
         stack = queue.front();
+        // get the word off of the top of the front stack
         word = stack.top();
         
         // find one-off matches
         findnext(nextwords,word,end);
-        
-        // lets do other stuff?
-        
-        for (i=0;i<nextwords.size(); i++) {
-            if (nextwords.at(i)==end) {
-                // match found
-                stack.push(end);
-                //print the stack
-                //cout << "Match found.";
-                printstack(stack,outfile);
-                return;
-            } else {
-                tempstack = stack;
-                tempstack.push(nextwords.at(i));
-                queue.push(tempstack);
+        //cout << "Nextwords size: " << nextwords.size() << endl;
+        if (nextwords.size() != 0) {
+            for (i=0;i<nextwords.size(); i++) {
+                if (nextwords.at(i)==end) {
+                    // if the off by one word is the last word in the dictionary
+                    // the ladder contains the entire stack -- complete and return.
+                    stack.push(end);
+                    //print the stack
+                    //cout << "Match found.";
+                    printstack(stack,outfile);
+                    return;
+                } else {
+                    // otherwise, create a copy of the front stack and push the
+                    // off by one word from dictionary
+                    tempstack = stack;
+                    tempstack.push(nextwords.at(i));
+                    queue.push(tempstack);
+                }
             }
         }
         nextwords.clear();
+        // dequeue the front stack
         queue.pop();
     }
     // if a word ladder is not found, then do this
@@ -129,9 +135,6 @@ void WordLadder::findnext(vector<string> &nextwords, string word, string end) {
                     //cout << "Pushing " << nextword << " into vector...";
                     it = dict.erase(it);
                     nextwords.push_back(nextword);
-                    if (*it == end) {
-                        return;
-                    }
                     //used.push_back(nextword);
                 }
             }
