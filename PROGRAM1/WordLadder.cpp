@@ -78,7 +78,7 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         //cout << word <<" ";
         // find one-off matches
         findnext(nextwords,word,end);
-        //cout << "One off matches for " << word << ": ";
+        // cout << "One off matches for " << word << ": ";
         if (nextwords.size() != 0) {
             for (i=0;i<nextwords.size(); i++) {
                 //cout << nextwords.at(i) << " ";
@@ -97,8 +97,8 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
                     tempstack = stack;
                     tempstack.push(nextwords.at(i));
                     queue.push(tempstack);
-                    dict.remove(nextwords.at(i));
                 }
+                dict.remove(nextwords.at(i));
             }
         }
         nextwords.clear();
@@ -141,7 +141,7 @@ void WordLadder::findnext(vector<string> &nextwords, string word, string end) {
                     // If the modified word is found in the dictionary,
                     // delete it from the dictionary and add it to the
                     // vector of next words.
-                    it = dict.erase(it);
+                    //it = dict.erase(it);
                     nextwords.push_back(nextword);
                     if (nextword == end) {
                         return;
