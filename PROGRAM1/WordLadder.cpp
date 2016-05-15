@@ -80,7 +80,7 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         //cout << "One off matches for " << word << ": ";
         if (nextwords.size() != 0) {
             for (i=0;i<nextwords.size(); i++) {
-                cout << nextwords.at(i) << " ";
+                //cout << nextwords.at(i) << " ";
                 if (nextwords.at(i)==end) {
                     // if the off by one word is the last word in the dictionary
                     // the ladder contains the entire stack -- complete and return.
