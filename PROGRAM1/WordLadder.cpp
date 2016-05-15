@@ -25,15 +25,6 @@ WordLadder::WordLadder(const string &file) {
 
 void WordLadder::outputLadder(const string &start, const string &end, const string &outputFile) {
     
-    // set up the stuff
-    queue< stack<string> > queue;
-    stack< string > stack, tempstack;
-    vector<string> nextwords,used;
-    unsigned i;
-    string word;
-    bool startgood = false;
-    bool endgood = false;
-    
     ofstream outfile;
     outfile.open(outputFile.c_str());
     if (!outfile.is_open()) {
@@ -44,7 +35,17 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     if (start == end) {
         outfile << start;
         return;
-    }
+    }    
+    // set up the stuff
+    queue< stack<string> > queue;
+    stack< string > stack, tempstack;
+    vector<string> nextwords;
+    unsigned i;
+    string word;
+    bool startgood = false;
+    bool endgood = false;
+    
+
     
     stack.push(start);
     queue.push(stack);
@@ -73,7 +74,7 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         word = stack.top();
         
         // find one-off matches
-        findnext(nextwords,used,word);
+        findnext(nextwords,word,end);
         
         // lets do other stuff?
         
@@ -110,7 +111,7 @@ bool WordLadder::vectorcontains(vector<string> vec, string word) {
     return false;
 }
 
-void WordLadder::findnext(vector<string> &nextwords, vector<string> &used, string word) {
+void WordLadder::findnext(vector<string> &nextwords, string word, string end) {
 
     string nextword;
     list<string>::iterator it;
@@ -128,6 +129,9 @@ void WordLadder::findnext(vector<string> &nextwords, vector<string> &used, strin
                     //cout << "Pushing " << nextword << " into vector...";
                     it = dict.erase(it);
                     nextwords.push_back(nextword);
+                    if (*it == end) {
+                        return;
+                    }
                     //used.push_back(nextword);
                 }
             }
