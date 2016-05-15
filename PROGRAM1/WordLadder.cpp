@@ -1,5 +1,3 @@
-
-
 #include "WordLadder.h"
 
 WordLadder::WordLadder(const string &file) {
@@ -119,20 +117,23 @@ void WordLadder::findnext(vector<string> &nextwords, vector<string> &used, strin
     //int interrupt=0;
     unsigned i;
     char ltr;
-    
+    //cout << "Start findword for [" << word << "]...";
     for (i=0;i<word.length();++i) {
+        //cout << "Found " << nextword << "...";
         nextword = word;
         for (ltr = 'a'; ltr <= 'z'; ++ltr) {
             nextword[i]=ltr;
             for (it=dict.begin();it!=dict.end();++it) {
-                if (*it == nextword && !vectorcontains(used,nextword)) {
+                if (*it == nextword) {
+                    //cout << "Pushing " << nextword << " into vector...";
+                    it = dict.erase(it);
                     nextwords.push_back(nextword);
-                    used.push_back(nextword);
-                    //dict.erase(it++);
+                    //used.push_back(nextword);
                 }
             }
         }
     }
+    //cout << "Exiting findword." << endl;
 }
 
 void WordLadder::printstack(stack<string> stack, ofstream &outfile) {

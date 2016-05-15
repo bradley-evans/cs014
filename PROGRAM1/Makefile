@@ -1,15 +1,17 @@
-main.exe: main.o BSTree.o Node.o
-	g++ -Wall -Werror main.o BSTree.o Node.o -o main.exe 
-	./main.exe < testharness
+main.exe: main.o WordLadder.o
+	g++ -Wall -Werror main.o WordLadder.o -o main.exe
+	cp -f dictionary.1.txt dictionary.txt
+	./main.exe < test.txt
+	cp -f dictionary.1.txt dictionary.txt
+	./main.exe < test.1.txt
+	cp -f dictionary.1.txt dictionary.txt
+	./main.exe < test.2.txt
 	
-main.o: main.cpp BSTree.cpp BSTree.h Node.cpp Node.h
-	g++ -Wall -Werror -c main.cpp BSTree.cpp Node.cpp
+main.o: main.cpp WordLadder.cpp WordLadder.h
+	g++ -Wall -Werror -c main.cpp WordLadder.cpp
 	
-BSTree.o: BSTree.cpp BSTree.h Node.cpp Node.h
+WordLadder.o: WordLadder.cpp WordLadder.h
 	g++ -Wall -Werror -c WordLadder.cpp
-
-Node.o: Node.cpp Node.h
-	g++ -Wall -Werror -c Node.cpp
 
 clean:
 	rm *.o *.exe output.txt
