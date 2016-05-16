@@ -18,7 +18,7 @@ class WordLadder {
     list<string> dict;        //list of possible words in ladder
 
     bool vectorcontains(vector<string> vec, string word);
-    void findnext(vector<string> &nextwords, string word, string end);
+    void findnext(vector<string> &nextwords, string word, string end, int &ops);
     void printstack(stack<string> stack, ofstream &outfile);
     
     

@@ -39,11 +39,14 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     // set up the stuff
     queue< stack<string> > queue;
     stack< string > stack, tempstack;
-    vector<string> nextwords;
     unsigned i;
     string word;
     bool startgood = false;
     bool endgood = false;
+    
+    string nextword;
+    list<string>::iterator it;
+    char ltr;
     
 
     
@@ -67,48 +70,49 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     
     // find the first word, delete it
     dict.remove(start);
-    
-    
-        //cout << "Words at Top of Stack: ";
+    double opers=0;
     while(!queue.empty()) {
-        
         stack = queue.front();
         // get the word off of the top of the front stack
         word = stack.top();
-        //cout << word <<" ";
-        // find one-off matches
-        findnext(nextwords,word,end);
-        // cout << "One off matches for " << word << ": ";
-        if (nextwords.size() != 0) {
-            for (i=0;i<nextwords.size(); i++) {
-                //cout << nextwords.at(i) << " ";
-                if (nextwords.at(i)==end) {
-                    // if the off by one word is the last word in the dictionary
-                    // the ladder contains the entire stack -- complete and return.
-                    stack.push(end);
-                    //print the stack
-                    //cout << "Match found.";
-                    printstack(stack,outfile);
-                    //cout << endl << "Complete!" << endl;
-                    return;
-                } else {
-                    // otherwise, create a copy of the front stack and push the
-                    // off by one word from dictionary
-                    tempstack = stack;
-                    tempstack.push(nextwords.at(i));
-                    queue.push(tempstack);
+        //cout << "Current word: " << word << endl;
+        for (i=0;i<5;++i) {
+            nextword = word;
+            //cout << "i = " << i;
+            for (ltr = 'a'; ltr <= 'z'; ++ltr) {
+                // Change one letter in nextword.
+                nextword[i]=ltr;
+                //cout << "Current nextword: " << nextword << " originally " << word << endl;
+                for (it=dict.begin();it!=dict.end();++it) {
+                    if (*it == nextword) {
+                        if (nextword==end) {
+                            // if the off by one word is the last word 
+                            // the ladder contains the entire stack -- complete and return.
+                            stack.push(end);
+                            //print the stack
+                            printstack(stack,outfile);
+                            cout << "Operations: " << opers;
+                            return;
+                        } else {
+                            // otherwise, create a copy of the front stack and push the
+                            // off by one word from dictionary
+                            tempstack = stack;
+                            tempstack.push(nextword);
+                            queue.push(tempstack);
+                            it = dict.erase(it);
+                        }
+                        opers++;
+                    }
                 }
-                dict.remove(nextwords.at(i));
             }
         }
-        nextwords.clear();
-        // dequeue the front stack
         queue.pop();
     }
     // if a word ladder is not found, then do this
     if (outfile.is_open()) {
         outfile << "No Word Ladder Found!!";
     }
+    cout << "Operations: " << opers;
 }
 
 bool WordLadder::vectorcontains(vector<string> vec, string word) {
@@ -121,7 +125,7 @@ bool WordLadder::vectorcontains(vector<string> vec, string word) {
     return false;
 }
 
-void WordLadder::findnext(vector<string> &nextwords, string word, string end) {
+void WordLadder::findnext(vector<string> &nextwords, string word, string end, int &ops) {
 
     string nextword;
     list<string>::iterator it;
@@ -137,11 +141,12 @@ void WordLadder::findnext(vector<string> &nextwords, string word, string end) {
             nextword[i]=ltr;
             for (it=dict.begin();it!=dict.end();++it) {
                 // Check the modified nextword against the dictionary.
+                ops++;
                 if (*it == nextword && nextword != word) {
                     // If the modified word is found in the dictionary,
                     // delete it from the dictionary and add it to the
                     // vector of next words.
-                    //it = dict.erase(it);
+                    it = dict.erase(it);
                     nextwords.push_back(nextword);
                     if (nextword == end) {
                         return;
