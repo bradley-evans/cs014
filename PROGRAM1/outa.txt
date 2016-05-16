@@ -1,1 +1,1 @@
-Error. Start or end words are not in the dictionary.
+No Word Ladder Found!!
