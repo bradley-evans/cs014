@@ -39,11 +39,10 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     // set up the stuff
     queue< stack<string> > queue;
     stack< string > tempstack;
-    unsigned i;
+
     string word;
-    string nextword;
     list<string>::iterator it;
-    char ltr;
+    
     
     tempstack.push(start);
     queue.push(tempstack);
@@ -54,30 +53,23 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     while(!queue.empty()) {
         // get the word off of the top of the front stack
         word = queue.front().top();
-        for (i=0;i<5;++i) {
-            nextword = word;
-            for (ltr = 'a'; ltr <= 'z'; ++ltr) {
-                // Change one letter in nextword.
-                nextword[i]=ltr;
-                for (it=dict.begin();it!=dict.end();++it) {
-                    if (*it == nextword) {
-                        if ( *it == end) {
-                            // if the off by one word is the last word 
-                            // the ladder contains the entire stack -- output and return.
-                            queue.front().push(end);
-                            //print the stack
-                            printstack(queue.front(),outfile);
-                            //cout << "Operations: " << opers << endl << endl;
-                            return;
-                        } 
-                        // otherwise, create a copy of the front stack and push the
-                        // off by one word from dictionary
-                        tempstack = queue.front();
-                        tempstack.push(nextword);
-                        queue.push(tempstack);
-                        it = dict.erase(it);
-                    }
-                }
+        for (it=dict.begin();it!=dict.end();++it) {
+            if (wordcompare(word,*it)) {
+                if (*it == end) {
+                    // if the off by one word is the last word 
+                    // the ladder contains the entire stack -- output and return.
+                    queue.front().push(end);
+                    //print the stack
+                    printstack(queue.front(),outfile);
+                    //cout << "Operations: " << opers << endl << endl;
+                    return;
+                } 
+                // otherwise, create a copy of the front stack and push the
+                // off by one word from dictionary
+                tempstack = queue.front();
+                tempstack.push(*it);
+                queue.push(tempstack);
+                it = dict.erase(it);
             }
         }
         queue.pop();
@@ -88,6 +80,17 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     }
 }
 
+bool WordLadder::wordcompare(string word, string dictword) {
+    int hits = 0;
+    for (int i=0; i<5; i++) {
+        if (word[i] == dictword[i]) { hits++; }
+    }
+    if (hits == 4) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 void WordLadder::printstack(stack<string> stack, ofstream &outfile) {
     
