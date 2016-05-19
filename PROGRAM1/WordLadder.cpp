@@ -79,6 +79,8 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
                 stack.push(*it);
                 queue.push(stack);
                 it = dict.erase(it);
+                // decrement iterator by one to correct for the advanced iterator
+                // returned by the std::list::erase function
                 it--;
             }
         }
