@@ -1,4 +1,4 @@
 dictionary.txt
 outc.txt
-wince
 heart
+wince
