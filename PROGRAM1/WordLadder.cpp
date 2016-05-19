@@ -31,7 +31,7 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     }
     // set up the stuff
     queue< stack<string> > queue;
-    stack< string > tempstack;
+    stack< string > stack;
     string word;
     list<string>::iterator it;
     bool startgood = false, endgood = false;
@@ -53,8 +53,8 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         outfile << start;
         return;
     }
-    tempstack.push(start);
-    queue.push(tempstack);
+    stack.push(start);
+    queue.push(stack);
    
     // find the first word, delete it
     dict.remove(start);
@@ -75,10 +75,11 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
                 } 
                 // otherwise, create a copy of the front stack and push the
                 // off by one word from dictionary
-                tempstack = queue.front();
-                tempstack.push(*it);
-                queue.push(tempstack);
+                stack = queue.front();
+                stack.push(*it);
+                queue.push(stack);
                 it = dict.erase(it);
+                it--;
             }
         }
         queue.pop();
