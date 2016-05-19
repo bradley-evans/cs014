@@ -13,6 +13,10 @@ WordLadder::WordLadder(const string &file) {
                 return;
             }
             */
+            if (word.size() != 5) {
+                cout << "Error: Word longer than 5 characters detected in dictionary." << endl;
+                return;
+            }
             dict.push_back(word.c_str());
         }
         infile.close();
