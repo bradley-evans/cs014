@@ -32,7 +32,7 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     ofstream outfile;
     outfile.open(outputFile.c_str());
     if (!outfile.is_open()) {
-        cout << "Opening output file failed.";
+        cout << "Opening output file failed." << endl;
         return;
     }
     if (start == end) {
@@ -116,7 +116,7 @@ void WordLadder::printstack(stack<string> stack, ofstream &outfile) {
                 cout << " ";
             }
         }
-        //cout << "|" << endl;
+        cout << endl;
     }
     // if (outfile.is_open()) {
     //     while (!stack.empty()) {

@@ -36,6 +36,7 @@ int main() {
    
 	WordLadder wl(dictFile);
 	
+	cout << "Ladder for " << wordBegin << " to " << wordEnd << ": ";
 	wl.outputLadder(wordBegin, wordEnd, outFile);
 
    return 0;
