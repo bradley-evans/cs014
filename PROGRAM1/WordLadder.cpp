@@ -8,8 +8,7 @@ WordLadder::WordLadder(const string &file) {
         while (!infile.eof()) {
             getline(infile,word);
             if (word.size() != 5) {
-                cout << "Error: Word longer than 5 characters detected in dictionary." << endl;
-                return;
+                cout << "Warning: Word longer than 5 characters detected in dictionary." << endl;
             }
             dict.push_back(word.c_str());
         }
