@@ -43,14 +43,24 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     // set up the stuff
     queue< stack<string> > queue;
     stack< string > tempstack;
-
     string word;
     list<string>::iterator it;
-    
-    
     tempstack.push(start);
     queue.push(tempstack);
+    bool startgood = false, endgood = false;
     
+    for (it=dict.begin();it!=dict.end();++it) {
+        if (*it == start) {
+            startgood = true;
+        }
+        if (*it == end) {
+            endgood = true;
+        }
+    }
+    if (!startgood || !endgood) {
+        cout << "Starting or ending word was not found in the dictionary." << endl;
+        return;
+    }
    
     // find the first word, delete it
     dict.remove(start);
@@ -81,6 +91,7 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
     // if a word ladder is not found, then do this
     if (outfile.is_open()) {
         outfile << "No Word Ladder Found!!";
+        cout << "No Word Ladder Found!!";
     }
 }
 
