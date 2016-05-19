@@ -94,14 +94,37 @@ bool WordLadder::wordcompare(string word, string dictword) {
 
 void WordLadder::printstack(stack<string> stack, ofstream &outfile) {
     
+    int i = 0;
+    vector<string> ladder;
+    while (!stack.empty()) {
+        ladder.push_back(stack.top());
+        stack.pop();
+        i++;
+    }
+    
     if (outfile.is_open()) {
-        while (!stack.empty()) {
-            outfile << stack.top();
-            stack.pop();
-            if (!stack.empty()) {
+        while (i!=0) {
+            i--;
+            outfile << ladder.at(i);
+            cout << ladder.at(i);
+            if (i!=0) {
                 outfile << " ";
+                cout << " ";
             }
         }
+        cout << "|" << endl;
     }
+    // if (outfile.is_open()) {
+    //     while (!stack.empty()) {
+            
+    //         outfile << stack.top();
+    //         cout << stack.top();
+    //         stack.pop();
+    //         if (!stack.empty()) {
+    //             outfile << " ";
+    //             cout << " ";
+    //         }
+    //     }
+    // }
     //cout << endl;
 }
