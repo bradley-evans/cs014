@@ -7,12 +7,6 @@ WordLadder::WordLadder(const string &file) {
     if (infile.is_open()) {
         while (!infile.eof()) {
             getline(infile,word);
-            /* This code is causing problems with zyBooks
-            if (word.length() != 5) {
-                cout << "Word not exactly five characters detected!" << endl;
-                return;
-            }
-            */
             if (word.size() != 5) {
                 cout << "Error: Word longer than 5 characters detected in dictionary." << endl;
                 return;
@@ -29,26 +23,21 @@ WordLadder::WordLadder(const string &file) {
 
 void WordLadder::outputLadder(const string &start, const string &end, const string &outputFile) {
     
+    cout << "Finding word ladder from " << start << " to " << end << ": ";
     ofstream outfile;
     outfile.open(outputFile.c_str());
     if (!outfile.is_open()) {
         cout << "Opening output file failed." << endl;
         return;
     }
-    if (start == end) {
-        outfile << start;
-        return;
-    }
-    
     // set up the stuff
     queue< stack<string> > queue;
     stack< string > tempstack;
     string word;
     list<string>::iterator it;
-    tempstack.push(start);
-    queue.push(tempstack);
     bool startgood = false, endgood = false;
     
+    // initial validity tests
     for (it=dict.begin();it!=dict.end();++it) {
         if (*it == start) {
             startgood = true;
@@ -61,6 +50,12 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         cout << "Starting or ending word was not found in the dictionary." << endl;
         return;
     }
+    if (start == end) {
+        outfile << start;
+        return;
+    }
+    tempstack.push(start);
+    queue.push(tempstack);
    
     // find the first word, delete it
     dict.remove(start);
@@ -68,6 +63,7 @@ void WordLadder::outputLadder(const string &start, const string &end, const stri
         // get the word off of the top of the front stack
         word = queue.front().top();
         for (it=dict.begin();it!=dict.end();++it) {
+            // wordcompare will decide if the word is off by one from the dictionary word.
             if (wordcompare(word,*it)) {
                 if (*it == end) {
                     // if the off by one word is the last word 

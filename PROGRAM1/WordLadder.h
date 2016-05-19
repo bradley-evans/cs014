@@ -16,7 +16,6 @@ class WordLadder {
 
   private:
     list<string> dict;        //list of possible words in ladder
-
     void printstack(stack<string> stack, ofstream &outfile);
     bool wordcompare(string word, string dictword);
     
