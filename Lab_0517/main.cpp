@@ -200,6 +200,29 @@ void insertionsort (int *numbers) {
     }
 }
 
+void mergesort(*int arr, int start, int end) {
+    if (end-start == 0) {
+        return;
+    }
+    m = (end-start)/2 + start;
+    
+    mergesort[arr,0,m];
+    mergesort[arr,m+1,size];
+    
+    int i=start; j=start, k=m+1, temp=0;
+    int arr2[NUMBERS_SIZE] = arr;
+    
+    while i <= m and j <= n,
+        
+        arr[i++] = (arr[j] < arr2[k]) ? arr[j++] : arr2[i++];
+    while i <= m,
+        a[k++] = b[i++]
+        
+    }
+    
+}
+
+
 int main() {
     int i = 0, elapsedTime = 0;
     int arr1[NUMBERS_SIZE], arr2[NUMBERS_SIZE], arr3[NUMBERS_SIZE];

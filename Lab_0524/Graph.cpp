@@ -13,6 +13,7 @@ int Graph::labelsearch(string string) {
     }
     return 0;
 }
+
 void Graph::addneighbor(int curr, int newneighbor_loc) {
     pair <int,int> pair(newneighbor_loc,1);
     this->vertices.at(curr).neighbors.push_back(pair);
@@ -39,7 +40,7 @@ Graph::Graph(ifstream& file) {
         file >> nodestring;
         Vertex vertex;
         vertex.label = nodestring;
-        this->vertices.at(i) = vertex;
+        this->vertices.push_back(vertex);
     }
     
     // Now populate the rest of the adjacent list.
@@ -70,12 +71,41 @@ void Graph::bfs() {
 // Breadth First Search. Via a BFS traversal, this function should assign each 
 // individual vertex's distance to the number of hops that the vertex is from 
 // the start vertex. You can find the pseudo code for BFS on graphs.pdf
-    // vertices.at(0).color = "GRAY";
-    // queue q;
-    // q.push(vertices.at(0));
-    // while (!q.empty()) {
-    //     Vertex temp = q.front();
-    //     q.pop();
-    //     for(int i = 0; )
-    // }
+    list<pair<int,int> >::iterator it;
+    vertices.at(0).color = "GRAY";
+    vertices.at(0).distance = 0;
+    queue<Vertex> q;
+    Vertex tempFront, v;
+    q.push(vertices.at(0));
+    while (!q.empty()) {
+        tempFront = q.front();
+        q.pop();
+        cout << "Visiting " << tempFront.label << endl;
+        for(it = tempFront.neighbors.begin(); it != tempFront.neighbors.end(); it++) {
+            v = vertices.at(it->first);
+            if(v.color == "WHITE") {
+                v.color = "GRAY";
+                v.distance = tempFront.distance + 1;
+                v.prev = &tempFront;
+                q.push(v);
+            }
+        }
+        tempFront.color = "BLACK";
+    }
 }
+
+
+/*
+
+void functionname(int) {
+// start at vertices[0]
+currpos = 0
+
+verticies[currpos];
+
+
+
+
+
+
+*/
