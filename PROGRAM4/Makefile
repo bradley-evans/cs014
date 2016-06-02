@@ -1,15 +1,15 @@
-main.exe: main.o Tree.o Node.o
-	g++ -Wall -Werror main.o Tree.o Node.o -o main.exe 
-	./main.exe < testharness.txt
+main.exe: main.o HashTable.o WordEntry.o
+	g++ -Wall -Werror main.o HashTable.o WordEntry.o -o main.exe 
+	./main.exe
 	
-main.o: main.cpp Tree.cpp Tree.h Node.cpp Node.h
-	g++ -Wall -Werror -c main.cpp Tree.cpp Node.cpp
+main.o: main.cpp HashTable.cpp HashTable.h WordEntry.cpp WordEntry.h
+	g++ -Wall -Werror -c main.cpp HashTable.cpp WordEntry.cpp
 	
-Tree.o: Tree.cpp Tree.h Node.cpp Node.h
-	g++ -Wall -Werror -c Tree.cpp
+HashTable.o: HashTable.cpp HashTable.h WordEntry.cpp WordEntry.h
+	g++ -Wall -Werror -c HashTable.cpp
 
-Node.o: Node.cpp Node.h
-	g++ -Wall -Werror -c Node.cpp
+WordEntry.o: WordEntry.cpp WordEntry.h
+	g++ -Wall -Werror -c WordEntry.cpp
 
 clean:
 	rm *.o *.exe *.dot *.jpg

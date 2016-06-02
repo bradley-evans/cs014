@@ -7,7 +7,11 @@
 */
 
 WordEntry::WordEntry(const string &text, int score) {
-	 
+	 this->word = text;
+	 this->totalScore = score;
+	 this->numAppearances = 1;
+
+    //cout << "created entry for " << text << " with score " << score << "...";
 }
 
 /* addNewAppearance
@@ -17,7 +21,8 @@ WordEntry::WordEntry(const string &text, int score) {
 * also should increase numAppearances
 */
 void WordEntry::addNewAppearance(int s) {
-
+    this->totalScore = this->totalScore + s;
+    this->numAppearances++;
 }
 
 /*getWord
@@ -27,7 +32,7 @@ void WordEntry::addNewAppearance(int s) {
 * simple accessor function  
 */
 const string & WordEntry::getWord() {
-
+    return this->word;
 }
 
 /* getAverage
@@ -37,5 +42,5 @@ const string & WordEntry::getWord() {
 *  to a double will be necessary to avoid integer division
 */
 double WordEntry::getAverage() {
-
+    return ((double)this->totalScore/(double)this->numAppearances);
 }

@@ -52,7 +52,7 @@ int main() {
 	    
 	    double sentiment = 0.0;
 	    
-	    unsigned len = message.size();
+	    size_t len = message.size();
 	    // get each individual word from the input
 	    while(len != string::npos) {
 	        string sub;
