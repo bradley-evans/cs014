@@ -23,16 +23,16 @@ int main() {
              inputs[8]);
     if (head.solve(solution) == 0) {
         // the output is empty
-        cout << solution << endl;
+        solution.empty();
     } else if (head.solve(solution) == -1) {
         // the output is erroneous
         cout << "Error 3" << endl;
+        solution.empty();
     } else if (head.solve(solution) == 1) {
         // the solution is good.
-        cout << solution << endl;
     }
     
-    
+    cout << solution << endl;
     //cout << "Run complete." << endl;
 }
 
