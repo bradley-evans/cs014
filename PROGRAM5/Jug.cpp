@@ -282,6 +282,10 @@ int Jug::solve(string &solution) {
     dijkstra(0);
     Vertex finalVertex(0,N);
     int index = searchExisting(finalVertex);        // the index of the goal vertex
+    if (index == -1) {
+        // no solution
+        return -1;
+    }
     int nextIndex = verticies.at(index).previous;
     list< pair<int,Edge> >::iterator it;
     stack<string> solnstack;
