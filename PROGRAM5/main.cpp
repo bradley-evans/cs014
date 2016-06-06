@@ -21,11 +21,19 @@ int main() {
     Jug head(   inputs[0], inputs[1], inputs[2], inputs[3], 
              inputs[4], inputs[5], inputs[6], inputs[7], 
              inputs[8]);
-    head.solve(solution);
-    cout << solution << endl;
+    if (head.solve(solution) == 0) {
+        // the output is empty
+        cout << solution << endl;
+    } else if (head.solve(solution) == -1) {
+        // the output is erroneous
+        cout << "Error 3" << endl;
+    } else if (head.solve(solution) == 1) {
+        // the solution is good.
+        cout << solution << endl;
+    }
     
     
-    cout << "Run complete." << endl;
+    //cout << "Run complete." << endl;
 }
 
 
