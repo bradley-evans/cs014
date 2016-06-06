@@ -59,6 +59,7 @@ class Jug {
         int numVerticies;
         void dijkstra(int);
         void updateindicies();
+        bool invalid;
 };
 
 #endif

@@ -38,8 +38,16 @@ Jug::Jug(int cA, int cB, int N, int cfA, int cfB, int ceA, int ceB, int cpAB, in
     this->cpAB = cpAB;      // cost to pour A->B
     this->cpBA = cpBA;      // cost to pour B->A
     
-    makeGraph();
-    this->numVerticies = verticies.size();
+    
+    if (cA > cB || cA < 0 || N > cB || cB > 1000) {
+        // invalid parameter
+        invalid = true;
+        this->numVerticies = 0;
+    } else {
+        makeGraph();
+        this->numVerticies = verticies.size();
+        invalid = false;
+    }
 }
 
 Jug::~Jug() {
@@ -270,9 +278,9 @@ void Jug::updateindicies() {
 }
 
 int Jug::solve(string &solution) {
-    if (cA > cB || cA < 0 || N > cB || cB > 1000) {
+    if (this->invalid) {
         // invalid parameter
-        solution = "";
+        solution.empty();
         return -1;
     }
     dijkstra(0);
