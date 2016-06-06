@@ -280,7 +280,7 @@ int Jug::solve(string &solution) {
     int index = searchExisting(finalVertex);        // the index of the goal vertex
     if (index == -1) {
         // no solution
-        solution = "\n";
+        solution.empty();
         return 0;
     }
     int nextIndex = verticies.at(index).previous;
