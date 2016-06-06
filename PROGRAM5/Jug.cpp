@@ -274,7 +274,7 @@ void Jug::updateindicies() {
 
 int Jug::solve(string &solution) {
     
-    if (cA >= cB) {
+    if (!(cA <= cB)) {
         solution.empty();
         return -1;
     }
