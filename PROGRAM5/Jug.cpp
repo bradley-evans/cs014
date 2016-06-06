@@ -274,11 +274,6 @@ void Jug::updateindicies() {
 
 int Jug::solve(string &solution) {
     
-    if (!(cA <= cB)) {
-        solution.empty();
-        return -1;
-    }
-    
     dijkstra(0);
     Vertex finalVertex(0,N);
     int index = searchExisting(finalVertex);        // the index of the goal vertex
