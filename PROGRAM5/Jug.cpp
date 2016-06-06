@@ -306,5 +306,5 @@ int Jug::solve(string &solution) {
         if (!solnstack.empty()) {solution.append("\n");}
     }
     
-    return 0;
+    return 1;
 }
