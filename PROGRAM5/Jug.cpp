@@ -272,7 +272,7 @@ void Jug::updateindicies() {
 int Jug::solve(string &solution) {
     if (cA > cB || cA < 0 || N > cB || cB > 1000) {
         // invalid parameter
-        solution.empty();
+        solution = "\n";
         return -1;
     }
     dijkstra(0);
