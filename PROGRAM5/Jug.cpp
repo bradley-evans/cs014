@@ -270,9 +270,9 @@ void Jug::updateindicies() {
 }
 
 int Jug::solve(string &solution) {
-    if (cA > cB || N > cB) {
+    if ((cA > cB && cA > 0) || (N > cB && N < 1000)) {
         // invalid parameter
-        solution = "";
+        solution.empty();
         return -1;
     }
     dijkstra(0);
@@ -280,6 +280,7 @@ int Jug::solve(string &solution) {
     int index = searchExisting(finalVertex);        // the index of the goal vertex
     if (index == -1) {
         // no solution
+        solution.empty();
         return 0;
     }
     int nextIndex = verticies.at(index).previous;
