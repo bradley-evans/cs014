@@ -270,13 +270,15 @@ void Jug::updateindicies() {
 }
 
 int Jug::solve(string &solution) {
-    
+    if (cA > cB || N > cB) {
+        // invalid parameter
+        return -1;
+    }
     dijkstra(0);
     Vertex finalVertex(0,N);
     int index = searchExisting(finalVertex);        // the index of the goal vertex
     if (index == -1) {
         // no solution
-        cout << "faart";
         return 0;
     }
     int nextIndex = verticies.at(index).previous;
