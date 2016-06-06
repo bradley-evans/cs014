@@ -223,10 +223,6 @@ void Jug::makeGraph() {
 }
 
 void Jug::dijkstra(int source) {
-
-    // verticies.at(source).distance = 0;
-    // verticies.at(source).previous = -1; // to denote undefined
-    
     queue<Vertex*> Queue;
     Vertex *curr;
     list< pair<int,Edge> >::iterator it;
@@ -263,6 +259,7 @@ int Jug::searchExisting(Vertex current) {
             return i;
         }
     }
+    // otherwise, not found
     return -1;
 }
 
@@ -279,13 +276,13 @@ int Jug::solve(string &solution) {
     int index = searchExisting(finalVertex);        // the index of the goal vertex
     if (index == -1) {
         // no solution
+        cout << "faart";
         return 0;
     }
     int nextIndex = verticies.at(index).previous;
     list< pair<int,Edge> >::iterator it;
     stack<string> solnstack;
     string str;
-    
     str.clear();
     str.append("success ");
     str.append(SSTR(verticies.at(index).distance));

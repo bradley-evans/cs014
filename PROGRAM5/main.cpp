@@ -12,28 +12,19 @@ June 2nd, 2016
 using namespace std;
 
 int main() {
-    string solution;
-    /* Take in some input. Make the new jug object */
-    int inputs[9];
-    for (int i=0;i<9;i++) {
-        cin >> inputs[i];
-    }
-    Jug head(   inputs[0], inputs[1], inputs[2], inputs[3], 
-             inputs[4], inputs[5], inputs[6], inputs[7], 
-             inputs[8]);
-    if (head.solve(solution) == 0) {
-        // the output is empty
-        solution.empty();
-    } else if (head.solve(solution) == -1) {
-        // the output is erroneous
-        cout << "Error 3" << endl;
-        solution.empty();
-    } else if (head.solve(solution) == 1) {
-        // the solution is good.
-    }
-    
-    cout << solution << endl;
-    //cout << "Run complete." << endl;
+   string solution;
+   Jug head(3, 5, 4, 1, 2, 3, 4, 5, 6);
+   if (head.solve(solution) != 1) {
+      cout << "Error 3" << endl;
+   }
+   cout << solution << endl << endl;
+   
+   
+   Jug head2( 3, 5, 4, 1, 1, 1, 1, 1, 2);         
+   if(head2.solve(solution) != 1) {
+      cout << "Error 3" << endl;
+   }
+   cout << solution << endl;
 }
 
 
