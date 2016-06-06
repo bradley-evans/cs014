@@ -22,7 +22,7 @@ int main() {
              inputs[4], inputs[5], inputs[6], inputs[7], 
              inputs[8]);
     head.solve(solution);
-    // cout << solution << endl;
+    cout << solution << endl;
     
     
     cout << "Run complete." << endl;

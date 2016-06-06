@@ -8,6 +8,11 @@
 #include <utility> // pair
 #include <queue>
 #include <limits> // to set ints to the max value more easily
+#include <stack>
+#include <sstream>
+
+#define SSTR( x ) static_cast< std::ostringstream & >( \
+        ( std::ostringstream() << std::dec << x ) ).str()
 
 
 class Edge {

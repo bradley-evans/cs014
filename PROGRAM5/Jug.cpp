@@ -55,10 +55,10 @@ void Jug::makeGraph() {
     this->verticies.push_back(Vertex(0,0));         // Start where jug qty is (0,0)
                                                     // Then move on to where one jug or the other is filled.
     this->verticies.push_back(Vertex(cA,0));        // JugA is filled. Push it onto (0,0)'s neighbors.
-    verticies.at(0).neighbors.push_back(pair<int,Edge>(verticies.size()-1,Edge("Fill A",cfA)));
+    verticies.at(0).neighbors.push_back(pair<int,Edge>(verticies.size()-1,Edge("fill A",cfA)));
     
     this->verticies.push_back(Vertex(0,cB));        // JugB is filled. Push it onto (0,0)'s neighbors.
-    verticies.at(0).neighbors.push_back(pair<int,Edge>(verticies.size()-1,Edge("Fill B",cfB)));
+    verticies.at(0).neighbors.push_back(pair<int,Edge>(verticies.size()-1,Edge("fill B",cfB)));
     
     // Push the first two verticies onto the queue
     
@@ -73,20 +73,20 @@ void Jug::makeGraph() {
         Queue.pop();
         currentjugA = curr.jugAqty;
         currentjugB = curr.jugBqty;
-        cout << "Assessing adjacent nodes to: (" << currentjugA << "," << currentjugB << ")..."<< endl;
+        //cout << "Assessing adjacent nodes to: (" << currentjugA << "," << currentjugB << ")..."<< endl;
         
         updateindicies();
         // ACTION: fillA
         newVertex = new Vertex(cA,currentjugB);
         existing = searchExisting(*newVertex);      // returns index of a matching node, else returns -1
         if (existing != -1) {
-            cout << "fillA outcome (" << cA << "," << currentjugB << ") exists...";
+            //cout << "fillA outcome (" << cA << "," << currentjugB << ") exists...";
             // if existing != -1, then there is a matching node which exists.
             // add verticies.at(existing) to curr's neighbors
             curr.neighbors.push_back(pair<int,Edge>(existing,Edge("fill A",cfA)));
-            cout << "Added neighbor. " << curr.neighbors.size() << " total neighbors to this vertex..." << endl;
+            //cout << "Added neighbor. " << curr.neighbors.size() << " total neighbors to this vertex..." << endl;
         } else {
-            cout << "fillA outcome (" << cA << "," << currentjugB << ") doesn't exist...";
+            //cout << "fillA outcome (" << cA << "," << currentjugB << ") doesn't exist...";
             // otherwise the node doesn't exist. create it.
             newVertex->index = verticies.size();
             this->verticies.push_back(*newVertex);
@@ -100,13 +100,13 @@ void Jug::makeGraph() {
         newVertex = new Vertex(currentjugA,cB);
         existing = searchExisting(*newVertex);      // returns index of a matching node, else returns -1
         if (existing != -1) {
-            cout << "fillB outcome (" << currentjugA << "," << cB << ") exists...";
+            //cout << "fillB outcome (" << currentjugA << "," << cB << ") exists...";
             // if existing != -1, then there is a matching node which exists.
             // add verticies.at(existing) to curr's neighbors
             curr.neighbors.push_back(pair<int,Edge>(existing,Edge("fill B",cfB)));
-            cout << "Added neighbor. " << curr.neighbors.size() << " total neighbors to this vertex..." << endl;
+            //cout << "Added neighbor. " << curr.neighbors.size() << " total neighbors to this vertex..." << endl;
         } else {
-            cout << "fillB outcome (" << currentjugA << "," << cB << ") doesn't exist...";
+            //cout << "fillB outcome (" << currentjugA << "," << cB << ") doesn't exist...";
             // otherwise the node doesn't exist. create it.
             newVertex->index = verticies.size();
             this->verticies.push_back(*newVertex);
@@ -129,14 +129,14 @@ void Jug::makeGraph() {
         newVertex = new Vertex(newA,newB);
         existing = searchExisting(*newVertex);      // returns index of a matching node, else returns -1
         if (existing != -1) {
-            cout << "pourAB outcome (" << newA << "," << newB << ") exists...";
+            //cout << "pourAB outcome (" << newA << "," << newB << ") exists...";
             // if existing != -1, then there is a matching node which exists.
             // add verticies.at(existing) to curr's neighbors
             curr.neighbors.push_back(pair<int,Edge>(existing,Edge("pour A B",cpAB)));
             
-            cout << "Added neighbor. " << curr.neighbors.size() << " total neighbors to this vertex..." << endl;
+            //cout << "Added neighbor. " << curr.neighbors.size() << " total neighbors to this vertex..." << endl;
         } else {
-            cout << "pourAB outcome (" << newA << "," << newB << ") doesn't exist...";
+            //cout << "pourAB outcome (" << newA << "," << newB << ") doesn't exist...";
             // otherwise the node doesn't exist. create it.
             newVertex->index = verticies.size();
             this->verticies.push_back(*newVertex);
@@ -159,14 +159,14 @@ void Jug::makeGraph() {
         newVertex = new Vertex(newA,newB);
         existing = searchExisting(*newVertex);      // returns index of a matching node, else returns -1
         if (existing != -1) {
-            cout << "pourBA outcome (" << newA << "," << newB << ") exists...";
+            //cout << "pourBA outcome (" << newA << "," << newB << ") exists...";
             // if existing != -1, then there is a matching node which exists.
             // add verticies.at(existing) to curr's neighbors
             curr.neighbors.push_back(pair<int,Edge>(existing,Edge("pour B A",cpBA)));
             
-            cout << "Added neighbor. " << curr.neighbors.size() << " total neighbors to this vertex..." << endl;
+            //cout << "Added neighbor. " << curr.neighbors.size() << " total neighbors to this vertex..." << endl;
         } else {
-            cout << "pourBA outcome (" << newA << "," << newB << ") doesn't exist...";
+            //cout << "pourBA outcome (" << newA << "," << newB << ") doesn't exist...";
             // otherwise the node doesn't exist. create it.
             newVertex->index = verticies.size();
             this->verticies.push_back(*newVertex);
@@ -180,14 +180,14 @@ void Jug::makeGraph() {
         newVertex = new Vertex(0,currentjugB);
         existing = searchExisting(*newVertex);      // returns index of a matching node, else returns -1
         if (existing != -1) {
-            cout << "emptyA outcome (" << "0" << "," << currentjugB << ") exists...";
+            //cout << "emptyA outcome (" << "0" << "," << currentjugB << ") exists...";
             // if existing != -1, then there is a matching node which exists.
             // add verticies.at(existing) to curr's neighbors
             curr.neighbors.push_back(pair<int,Edge>(existing,Edge("empty A",ceA)));
             
-            cout << "Added neighbor. " << curr.neighbors.size() << " total neighbors to this vertex..." << endl;
+            //cout << "Added neighbor. " << curr.neighbors.size() << " total neighbors to this vertex..." << endl;
         } else {
-            cout << "emptyA outcome (" << "0" << "," << currentjugB << ") doesn't exist...";
+            //cout << "emptyA outcome (" << "0" << "," << currentjugB << ") doesn't exist...";
             // otherwise the node doesn't exist. create it.
             newVertex->index = verticies.size();
             this->verticies.push_back(*newVertex);
@@ -201,14 +201,14 @@ void Jug::makeGraph() {
         newVertex = new Vertex(currentjugA,0);
         existing = searchExisting(*newVertex);      // returns index of a matching node, else returns -1
         if (existing != -1) {
-            cout << "emptyB outcome (" << currentjugA << "," << "0" << ") exists...";
+            //cout << "emptyB outcome (" << currentjugA << "," << "0" << ") exists...";
             // if existing != -1, then there is a matching node which exists.
             // add verticies.at(existing) to curr's neighbors
             curr.neighbors.push_back(pair<int,Edge>(existing,Edge("empty B",ceB)));
             
-            cout << "Added neighbor. " << curr.neighbors.size() << " total neighbors to this vertex..." << endl;
+            //cout << "Added neighbor. " << curr.neighbors.size() << " total neighbors to this vertex..." << endl;
         } else {
-            cout << "emptyB outcome (" << currentjugA << "," << "0" << ") doesn't exist...";
+            //cout << "emptyB outcome (" << currentjugA << "," << "0" << ") doesn't exist...";
             // otherwise the node doesn't exist. create it.
             newVertex->index = verticies.size();
             this->verticies.push_back(*newVertex);
@@ -216,75 +216,43 @@ void Jug::makeGraph() {
             // and then push this onto the queue
             Queue.push(verticies.at(verticies.size()-1));
         }
-        cout << endl;
+        //cout << endl;
         verticies.at(curr.index).neighbors = curr.neighbors;
     }
-    cout << verticies.size() << " verticies generated." << endl;
+    //cout << verticies.size() << " verticies generated." << endl;
 }
 
 void Jug::dijkstra(int source) {
-    cout << "here" << endl;
 
     // verticies.at(source).distance = 0;
     // verticies.at(source).previous = -1; // to denote undefined
     
-    queue<Vertex> Queue;
-    Vertex curr;
+    queue<Vertex*> Queue;
+    Vertex *curr;
     list< pair<int,Edge> >::iterator it;
-    for (int i=0; i<numVerticies; i++) 
-    {
+    for (int i=0; i<numVerticies; i++) {
         verticies.at(i).distance = INT_MAX;
-        Queue.push(verticies.at(i));
     }
     verticies.at(source).distance = 0;
     verticies.at(source).previous = -1;
+    for (int i=0; i<numVerticies; i++) {
+        Queue.push(&verticies.at(i));
+    }
     while (!Queue.empty()) {
-        // currentV = Pop unvisitedQueue
         curr = Queue.front();
         Queue.pop();
-        for (it=curr.neighbors.begin(); it!=curr.neighbors.end(); ++it) {
-            // edgeWeight = weight of edge from currentV to adjV
-            int edgeWeight = it->second.cost;
-            // alternativePathDistance = currentV->distance + edgeWeight
-            int alternativePathDistance = curr.distance + edgeWeight;
-            // if (alternativePathDistance < adjV->distance)
-            if (alternativePathDistance < verticies.at(it->first).distance) {
-            //         adjV->distance = alternativePathDistance
-            //         adjV->predV = currentV
-                verticies.at(it->first).distance = alternativePathDistance;
-                verticies.at(it->first).previous = curr.index;
+        //cout << "Checking neighors of (" << curr->jugAqty << "," << curr->jugBqty << ")...[index: " << curr->index << " self distance: " << curr->distance << "]" << endl;
+        for (it=curr->neighbors.begin(); it!=curr->neighbors.end(); ++it) {
+            int old_dist = verticies.at(it->first).distance;
+            int new_dist = curr->distance + it->second.cost;
+            //cout << "   Old dist: " << old_dist << " New dist: " << new_dist << "..." << endl;;
+            if (old_dist > new_dist) {
+                //cout << "   Updated distance for (" << verticies.at(it->first).jugAqty << "," << verticies.at(it->first).jugBqty << ") ...";
+                //cout << "   Setting prev for index " << verticies.at(it->first).index << " to " << curr->index << endl;
+                verticies.at(it->first).previous = curr->index;
+                verticies.at(it->first).distance = new_dist;
+                //cout << "   Index " << verticies.at(it->first).index << " now has values distance: " << verticies.at(it->first).distance << " previous " << verticies.at(it->first).previous << endl;
             }
-            
-            
-            
-            //           while (unvisitedQueue is not empty) {
-            //   // Visit vertex with minimum distance from startV
-            //   currentV = PopMin unvisitedQueue <------------------- popmin, can't use that
-            // works with a regular queue
-            //   for each vertex adjV adjacent to currentV {
-            //      edgeWeight = weight of edge from currentV to adjV
-            //      alternativePathDistance = currentV->distance + edgeWeight
-                          
-            //      // If shorter path from startV to adjV is found,
-            //      // update adjV's distance and predecessor
-            //      if (alternativePathDistance < adjV->distance) {
-            //         adjV->distance = alternativePathDistance
-            //         adjV->predV = currentV
-            //      }
-            //   }
-                    
-            
-            
-            //arent you supposed to compare current + edge weight to neighbor + edge weight?
-            // int old_dist = verticies.at(it->first).distance;
-            // int new_dist = curr.distance + it->second.cost;
-            // cout << "Old dist: " << old_dist << " New dist: " << new_dist << "...";
-            // if (old_dist > new_dist) {
-            //     cout << "Updated distance for (" << curr.jugAqty << "," << curr.jugBqty << ") ...";
-            //     cout << "Setting prev for index " << verticies.at(it->first).index << " to " << curr.index << endl;
-            //     verticies.at(it->first).previous = curr.index;
-            //     verticies.at(it->first).distance = new_dist;
-            // }
         }
     }
 }
@@ -310,25 +278,33 @@ int Jug::solve(string &solution) {
     int index = searchExisting(finalVertex);        // the index of the goal vertex
     int nextIndex = verticies.at(index).previous;
     list< pair<int,Edge> >::iterator it;
-    int errorbreak = 100;
+    stack<string> solnstack;
+    string str;
     
-    
+    str.clear();
+    str.append("success ");
+    str.append(SSTR(verticies.at(index).distance));
+    solnstack.push(str);
+    str.clear();
+    //cout << "success " << verticies.at(index).distance << endl;
     while (nextIndex != -1) {
-        cout << "Current Index: " << index << " Next Index: " << nextIndex << endl;
+        //cout << "Current Index: " << index << " Next Index: " << nextIndex << endl;
         for (it=verticies.at(nextIndex).neighbors.begin(); it!=verticies.at(nextIndex).neighbors.end(); it++) {
             if (it->first == index) {
-                cout << it->second.action << endl;
+                //cout << it->second.action << endl;
+                solnstack.push(it->second.action);
             }
         }
         index = nextIndex;
         nextIndex = verticies.at(index).previous;
-        errorbreak--;
-        if (errorbreak<0) {
-            break;
-        }
         
     }
-    
+    solution.clear();
+    while(!solnstack.empty()) {
+        solution.append(solnstack.top());
+        solnstack.pop();
+        if (!solnstack.empty()) {solution.append("\n");}
+    }
     
     return 0;
 }
