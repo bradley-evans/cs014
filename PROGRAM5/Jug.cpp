@@ -284,7 +284,7 @@ int Jug::solve(string &solution) {
     int index = searchExisting(finalVertex);        // the index of the goal vertex
     if (index == -1) {
         // no solution
-        return -1;
+        return 0;
     }
     int nextIndex = verticies.at(index).previous;
     list< pair<int,Edge> >::iterator it;
